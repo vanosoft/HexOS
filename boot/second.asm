@@ -8,7 +8,7 @@
 format binary as "sec"
 
 org 7E00h
-
+start:
 use16
 
 ; header zone
@@ -94,7 +94,7 @@ jmp $-2
 
 ; filler
 
-times 200h*16-1+$-$$ db 00h
+times 200h*16-1+start-$ db 00h
 
 ; magic
 
