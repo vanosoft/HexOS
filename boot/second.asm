@@ -21,33 +21,6 @@ nop
 
 include "second.inc"
 
-; data zone
-
-msg0 db "HexOS Second-stage Bootloader v2.2.1 by Ivan Chetchasov", newline
-db "LOG: Loading HAT16 filetable", newline, 00h
-
-bsod0:
-db ""
-db ""
-db "             ((((((", newline
-db "           ((::::::(   ERROR OCCURRED", newline
-db "         ((:::::::(    At position:  0x000052D", newline
-db "        (:::::::((", newline
-db "        (::::::(       Reason: cannot load kernel", newline
-db " :::::: (:::::(        Maybe your disk is corrupted", newline
-db " :::::: (:::::(        So try to re-install system", newline
-db " :::::: (:::::(        Or append file 'System/kernel.hex'", newline
-db "        (:::::(        To your disk with other PC", newline
-db "        (:::::(        (be careful, maybe virus killed", newline
-db "        (:::::(        your PC, don`t infect other one!)", newline
-db " :::::: (::::::(    ", newline
-db " :::::: (:::::::((  ", newline
-db " ::::::  ((:::::::( ", newline
-db "           ((::::::(", newline
-db "             ((((((", newline
-db "", newline
-db "Errcode: 0x000000D Errname: ERROR_CANNOT_LOAD_KERNEL", newline, 00h
-
 ; executable zone
 
 second_entry:
@@ -91,6 +64,33 @@ endall:
 cli
 hlt
 jmp $-2
+
+; data zone
+
+msg0 db "HexOS Second-stage Bootloader v2.2.1 by Ivan Chetchasov", newline
+db "LOG: Loading HAT16 filetable", newline, 00h
+
+bsod0:
+db newline
+db newline
+db "             ((((((", newline
+db "           ((::::::(   ERROR OCCURRED", newline
+db "         ((:::::::(    At position:  00007E32h", newline
+db "        (:::::::((", newline
+db "        (::::::(       Reason: cannot load kernel", newline
+db " :::::: (:::::(        Maybe your disk is corrupted", newline
+db " :::::: (:::::(        So try to re-install system", newline
+db " :::::: (:::::(        Or append file 'System/kernel.hex'", newline
+db "        (:::::(        To your disk with other PC", newline
+db "        (:::::(        (be careful, maybe virus killed", newline
+db "        (:::::(        your PC, don`t infect other one!)", newline
+db " :::::: (::::::(    ", newline
+db " :::::: (:::::::((  ", newline
+db " ::::::  ((:::::::( ", newline
+db "           ((::::::(", newline
+db "             ((((((", newline
+db newline
+db "Errcode: 0000000Dh Errname: ERROR_CANNOT_LOAD_KERNEL", newline, 00h
 
 ; filler
 
