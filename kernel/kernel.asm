@@ -17,7 +17,7 @@ macro movs reg, src {
 }
 
 ; HEADER
-
+org 0x8100
 jmp p32
 
 db "System/kernel.hex", 00h
