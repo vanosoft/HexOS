@@ -17,7 +17,7 @@ macro movs reg, src {
 }
 
 ; HEADER
-
+org 0x8100
 jmp p32
 
 db "System/kernel.hex", 00h
@@ -77,14 +77,10 @@ use32
 
 mov ax, GDT.data
 mov ds, ax
-
-; graphic segment
-
-movs gs, 0A000h
-
 ; stack segment
-
 mov ss, ax
+; graphic segment
+movs gs, ax
 
 ; Call 32-bit kernel
 
