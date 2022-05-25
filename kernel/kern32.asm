@@ -14,5 +14,5 @@ mov ah, 07
 mov al, "O"
 mov word [ebx], ax
 mov al, "K"
-mov word [ebx], ax
+mov word [ebx + 2], ax
 ret
