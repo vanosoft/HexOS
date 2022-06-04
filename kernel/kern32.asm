@@ -7,8 +7,6 @@
 
 use32
 
-main:
-
 mov ebx, 0000B8000h
 mov ah, 07
 mov al, "O"

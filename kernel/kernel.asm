@@ -97,6 +97,7 @@ hlt
 jmp $-2
 
 ; 32-BIT PART
+main:
 include "kern32.asm"
 
 ; FILLER
