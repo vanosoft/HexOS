@@ -7,15 +7,15 @@ macro IRQ IRP {
 }
 
 IDT: dw 0
-    .size dw @f-GDT-1
-    .linear dd GDT
+    .size dw @f-IDT-1
+    .linear dd IDT
     ; ISRs
     IRQ ISR._0
     IRQ ISR._1
     ; pointer
     .pointer:
-        dw GDT.size
-        dd GDT
+        dw IDT.size
+        dd IDT
     @@:
 
 ISR:
