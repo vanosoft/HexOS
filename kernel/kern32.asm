@@ -7,10 +7,8 @@
 
 use32
 
-mov ebx, 0000B8000h
-mov ah, 07
-mov al, "O"
-mov word [ebx], ax
-mov al, "K"
-mov word [ebx + 2], ax
+lidt fword [IDT.pointer]
+
 ret
+
+include "idt.asm"
