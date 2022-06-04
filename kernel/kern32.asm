@@ -9,7 +9,8 @@ use32
 
 lidt fword [IDT.pointer]
 
-sti
+mov eax, 0
+idiv eax
 
 ret
 

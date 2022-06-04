@@ -19,6 +19,8 @@ IDT:
 ISR:
     ._0:
         pushad
+	mov eax, 0xb8000
+	mov byte [eax], '/'
         popad
         iret
     ._1:
