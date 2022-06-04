@@ -1,8 +1,8 @@
 macro IRQ IRP {
     dw IRP AND 65535
-    dw GDT.code
+    dw 8
     db ?
-    db 01110001b
+    db 10001111b
     dw (IRP SHR 16) AND 65535
 }
 
