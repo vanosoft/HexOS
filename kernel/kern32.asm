@@ -9,6 +9,8 @@ use32
 
 lidt fword [IDT.pointer]
 
+sti
+
 ret
 
 include "idt.asm"
