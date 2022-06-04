@@ -6,15 +6,13 @@ macro IRQ IRP {
     dw (IRP SHR 16) AND 65535
 }
 
-IDT: dw 0
-    .size dw @f-IDT-1
-    .linear dd IDT
+IDT:
     ; ISRs
     IRQ ISR._0
     IRQ ISR._1
     ; pointer
     .pointer:
-        dw IDT.size
+        dw @f-IDT-1
         dd IDT
     @@:
 
