@@ -56,6 +56,8 @@ GDT: dw 0
         dd GDT
     @@:
 
+include "idt.asm"
+
 ; EXECUTABLE
 
 ; switch to P-mode
@@ -81,6 +83,9 @@ mov ds, ax
 mov ss, ax
 ; graphic segment
 movs gs, ax
+
+; stack grows from 90000h
+mov sp, 90000h
 
 ; Call 32-bit kernel
 
