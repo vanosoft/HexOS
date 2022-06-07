@@ -56,8 +56,6 @@ GDT: dw 0
         dd GDT
     @@:
 
-include "idt.asm"
-
 ; EXECUTABLE
 
 ; switch to P-mode
@@ -84,9 +82,6 @@ mov ss, ax
 ; graphic segment
 movs gs, ax
 
-; stack grows from 0FFFFh
-mov sp, 0FFFFh
-
 ; Call 32-bit kernel
 
 call main
@@ -102,19 +97,7 @@ hlt
 jmp $-2
 
 ; 32-BIT PART
-main:
-    mov ebx, 0000B8000h
-    mov ah, 07
-    mov al, "O"
-    mov word [ebx], ax
-    mov al, "K"
-    mov word [ebx + 2], ax
-    lidt [pidtptr]
-    mov eax, 0
-    idiv eax
-    ret
-
-pidtptr IDTPTR IDT
+include "kern32.asm"
 
 ; FILLER
 

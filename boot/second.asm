@@ -27,7 +27,7 @@ second_entry:
 
 cls
 
-;printsz msg0
+printsz msg0
 
 mov ah, 02h
 mov al, 08h
