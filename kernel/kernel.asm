@@ -32,7 +32,6 @@ db 10000000b
 
 include "fs.inc"
 include "str.inc"
-include "../boot/boot.inc"
 
 ; DATA
 
@@ -67,9 +66,11 @@ lgdt fword[GDT.pointer] ; Load GDT
 mov eax, cr0            ; Where my CR0?
 or al, 1                ; set lowest bit
 mov cr0,eax             ; apply changes
-jmp GDT.code:.pmode     ; jump next
+jmp GDT.code:pmode     ; jump next
 
-.pmode:
+include "idt.asm"
+
+pmode:
 
 use32
 
@@ -81,6 +82,8 @@ mov ds, ax
 mov ss, ax
 ; graphic segment
 movs gs, ax
+
+lidt fword [IDT.pointer]
 
 ; Call 32-bit kernel
 
@@ -97,7 +100,10 @@ hlt
 jmp $-2
 
 ; 32-BIT PART
-include "kern32.asm"
+main:
+    mov eax, 0
+    idiv eax
+    ret
 
 ; FILLER
 
