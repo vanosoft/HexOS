@@ -84,8 +84,8 @@ mov ss, ax
 ; graphic segment
 movs gs, ax
 
-; stack grows from 90000h
-mov sp, 90000h
+; stack grows from 0FFFFh
+mov sp, 0FFFFh
 
 ; Call 32-bit kernel
 
@@ -103,7 +103,18 @@ jmp $-2
 
 ; 32-BIT PART
 main:
-include "kern32.asm"
+    mov ebx, 0000B8000h
+    mov ah, 07
+    mov al, "O"
+    mov word [ebx], ax
+    mov al, "K"
+    mov word [ebx + 2], ax
+    lidt [pidtptr]
+    mov eax, 0
+    idiv eax
+    ret
+
+pidtptr IDTPTR IDT
 
 ; FILLER
 

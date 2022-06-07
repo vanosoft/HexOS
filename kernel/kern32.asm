@@ -13,4 +13,13 @@ mov al, "O"
 mov word [ebx], ax
 mov al, "K"
 mov word [ebx + 2], ax
+
+pidtptr IDTPTR IDT
+
+lidt [pidtptr]
+
+mov eax, 0
+
+idiv eax
+
 ret

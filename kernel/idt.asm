@@ -4,6 +4,8 @@ include "idt.inc"
 
 align 10h
 
+idtptr IDTPTR IDT
+
 IDT:
 ISR zrdiv_int
 ISR debug_int
@@ -37,6 +39,8 @@ ISR fpuer_int
 ;
 zrdiv_int:
     IRQ_START
+    mov eax, 0xB8000
+    mov byte [eax], "/"
     cli
     hlt
     jmp $-2
