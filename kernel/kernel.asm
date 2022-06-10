@@ -109,7 +109,7 @@ main:
 
 ; FILLER
 
-times 2000h-$+$$-1 db 00h
+times 1000h-$+$$-1 db 00h
 
 ; MAGIC
 

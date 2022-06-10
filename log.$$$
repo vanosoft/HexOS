@@ -18945,6 +18945,7 @@ IN:
 0x000ca541:  b0 3a                    movb     $0x3a, %al
 0x000ca543:  e8 99 ff                 callw    0xca4df
 
+Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000ca546:  88 e0                    movb     %ah, %al
@@ -19103,7 +19104,6 @@ IN:
 0x000fd241:  66 58                    popl     %eax
 0x000fd243:  cf                       iretw    
 
-Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000ca0e8:  72 56                    jb       0xca140
@@ -19749,6 +19749,7 @@ IN:
 0x000f88ec:  66 31 c0                 xorl     %eax, %eax
 0x000f88ef:  e9 e0 f2                 jmp      0xf7bd2
 
+Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000fb5c3:  66 bd 40 00 00 00        movl     $0x40, %ebp
@@ -19803,7 +19804,6 @@ IN:
 0x000fd410:  66 58                    popl     %eax
 0x000fd412:  cf                       iretw    
 
-Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000ca45f:  74 06                    je       0xca467
@@ -22390,6 +22390,36 @@ IN:
 0x000fa6ea:  67 66 83 7c 24 08 00     cmpl     $0, 8(%esp)
 0x000fa6f1:  74 17                    je       0xfa70a
 
+Servicing hardware INT=0x08
+----------------
+IN: 
+0x000fa758:  67 29 6b 0a              subw     %bp, 0xa(%ebx)
+0x000fa75c:  66 b8 fa ff ff ff        movl     $0xfffffffa, %eax
+0x000fa762:  eb 22                    jmp      0xfa786
+
+----------------
+IN: 
+0x000fa902:  66 b9 0c 00 00 00        movl     $0xc, %ecx
+0x000fa908:  66 89 c8                 movl     %ecx, %eax
+0x000fa90b:  66 83 c4 14              addl     $0x14, %esp
+0x000fa90f:  66 5b                    popl     %ebx
+0x000fa911:  66 5e                    popl     %esi
+0x000fa913:  66 5f                    popl     %edi
+0x000fa915:  66 5d                    popl     %ebp
+0x000fa917:  66 c3                    retl     
+
+----------------
+IN: 
+0x000fae16:  67 66 0f b7 56 0a        movzwl   0xa(%esi), %edx
+0x000fae1c:  66 39 d7                 cmpl     %edx, %edi
+0x000fae1f:  75 06                    jne      0xfae27
+
+----------------
+IN: 
+0x000f6ef9:  67 88 50 1d              movb     %dl, 0x1d(%eax)
+0x000f6efd:  67 83 48 24 01           orw      $1, 0x24(%eax)
+0x000f6f02:  66 c3                    retl     
+
 ----------------
 IN: 
 0x00007cbd:  bc e0 07                 movw     $0x7e0, %sp
@@ -22418,7 +22448,7 @@ IN:
 0x00007f15:  58                       popw     %ax
 0x00007f16:  b4 02                    movb     $2, %ah
 0x00007f18:  b0 10                    movb     $0x10, %al
-0x00007f1a:  b9 1c 00                 movw     $0x1c, %cx
+0x00007f1a:  b9 0c 00                 movw     $0xc, %cx
 0x00007f1d:  bb 00 81                 movw     $0x8100, %bx
 0x00007f20:  50                       pushw    %ax
 0x00007f21:  b8 00 00                 movw     $0, %ax
@@ -22426,7 +22456,6 @@ IN:
 0x00007f26:  58                       popw     %ax
 0x00007f27:  cd 13                    int      $0x13
 
-Servicing hardware INT=0x08
 ----------------
 IN: 
 0x00007f29:  72 0f                    jb       0x7f3a
@@ -22807,6 +22836,7 @@ IN:
 0x000083d4:  00 00                    addb     %al, (%bx, %si)
 0x000083d6:  00 00                    addb     %al, (%bx, %si)
 
+Servicing hardware INT=0x08
 ----------------
 IN: 
 0x00008100:  00 00                    addb     %al, (%bx, %si)
@@ -23178,7 +23208,6 @@ IN:
 0x000083d6:  00 00                    addb     %al, (%bx, %si)
 0x000083d8:  00 00                    addb     %al, (%bx, %si)
 
-Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000083da:  00 00                    addb     %al, (%bx, %si)
@@ -23273,6 +23302,7 @@ IN:
 0x000084fe:  00 80 48 65              addb     %al, 0x6548(%bx, %si)
 0x00008502:  78 4f                    js       0x8553
 
+Servicing hardware INT=0x08
 ----------------
 IN: 
 0x00008504:  53                       pushw    %bx
@@ -23326,7 +23356,7 @@ IN:
 
 ----------------
 IN: 
-0x00008100:  1b 53 00                 sbbw     (%bp, %di), %dx
+0x00008100:  0b 53 00                 orw      (%bp, %di), %dx
 0x00008103:  00 00                    addb     %al, (%bx, %si)
 0x00008105:  00 00                    addb     %al, (%bx, %si)
 0x00008107:  00 00                    addb     %al, (%bx, %si)
@@ -23689,11 +23719,10 @@ IN:
 0x000083d1:  00 00                    addb     %al, (%bx, %si)
 0x000083d3:  00 00                    addb     %al, (%bx, %si)
 0x000083d5:  00 00                    addb     %al, (%bx, %si)
+0x000083d7:  00 00                    addb     %al, (%bx, %si)
 
-Servicing hardware INT=0x08
 ----------------
 IN: 
-0x000083d7:  00 00                    addb     %al, (%bx, %si)
 0x000083d9:  00 00                    addb     %al, (%bx, %si)
 0x000083db:  00 00                    addb     %al, (%bx, %si)
 0x000083dd:  00 00                    addb     %al, (%bx, %si)
@@ -23717,14 +23746,10 @@ IN:
 0x00008402:  01 90 73 79              addw     %dx, 0x7973(%bx, %si)
 0x00008406:  73 74                    jae      0x847c
 
+Servicing hardware INT=0x08
 ----------------
 IN: 
-0x00007f53:  99                       cltd     
-0x00007f54:  ad                       lodsw    (%si), %ax
-0x00007f55:  7e b1                    jle      0x7f08
-
-----------------
-IN: 
+0x00007f53:  89 ad 7e b1              movw     %bp, -0x4e82(%di)
 0x00007f57:  48                       decw     %ax
 0x00007f58:  eb 00                    jmp      0x7f5a
 

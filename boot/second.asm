@@ -42,8 +42,8 @@ cls
 ;printsz msg0
 
 mov ah, 0x02
-mov al, (kernel_end-kernel_start)/512
-mov cx, 0x1C
+mov al, 0x10
+mov cx, 0x0C
 ; dl was not modified
 mov bx, 8100h
 movs es, 0000h
@@ -110,9 +110,3 @@ times 200h*0x2C/4-1+start-$ db 00h
 ; magic
 
 db EOF
-
-kernel_start:
-
-file "../kernel/kernel.hex"
-
-kernel_end:
