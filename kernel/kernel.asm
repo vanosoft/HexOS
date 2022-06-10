@@ -18,9 +18,11 @@ macro movs reg, src {
 
 ; HEADER
 org 0x8100
-jmp p32
 
-db "System/kernel.hex", 00h
+jmp p32
+nop
+
+db "system/kernel.hex", 00h
 times 243-$+$$ db 00h
 
 dd 00000000h
@@ -107,7 +109,7 @@ main:
 
 ; FILLER
 
-times 1000h-$+$$-1 db 00h
+times 2000h-$+$$-1 db 00h
 
 ; MAGIC
 

@@ -19,88 +19,137 @@ color:
 .block  db 0x70
 .bsod   db 0x1F
 
-handle_crlf:
-
 printsz:
     mov ebx, 0xB8000
     .cycle:
         lodsb
-        test al, al
-        jz .end
-        mov bh, 0x0D
-        cmp al, bh
-        jne .nocrlf
-        mov bh, 0x0A
-        cmp al, bh
-        jne .nocrlf
-        add dword [cury], 2
-        mov dword [curx], 0
-        jmp .cycle
-        .nocrlf:
+        cmp al, 00h
+        je .end
         push ebx
-        add dword ebx, [curx]
-        mov dword ecx, [cury]
-        mov dword edx, [winw]
-        imul ecx, edx
-        add ebx, ecx
+        add ebx, [curx]
+        add [curx], 2
         mov word [ebx], ax
-        add dword [curx], 2
-        mov eax, [curx]
-        mov ecx, [winw]
-        cmp eax, ecx
-        jl .nonl
-        mov dword [curx], 0
-        add dword [cury], 2
-        .nonl:
         pop ebx
         jmp .cycle
     .end:
     ret
 
+get_eip:
+pop eax
+ret
+
 IDT:
     ; ISRs
     IRQ ISR._0
     IRQ ISR._1
+    IRQ ISR._2
     ; pointer
     .pointer:
         dw @f-IDT-1
         dd IDT
     @@:
 
+dumpeax:
+.h dd 0x1F411F45
+.l dd 0x1F3A1F58
+dumpebx:
+.h dd 0x1F421F45
+.l dd 0x1F3A1F58
+dumpecx:
+.h dd 0x1F431F45
+.l dd 0x1F3A1F58
+dumpedi:
+.h dd 0x1F531F45
+.l dd 0x1F3A1F49
+dumpesi:
+.h dd 0x1F441F45
+.l dd 0x1F3A1F49
+
 ISR:
-    ._0:
+    ._0: ; #DE
         pushad
-	    mov esi, bsod_0
-        mov byte ah, [color.bsod]
+        mov ah, [color.bsod]
+        mov esi, bsod_0
+        call printsz
+        mov ah, [color.block]
+        mov esi, bsod_0_plus
         call printsz
         cli
         hlt
         popad
         iret
-    ._1:
+    ._1: ; #DB
         pushad
+        cli
+        hlt
+        popad
+        iret
+    ._2:
+        pushad
+        mov ah, [color.bsod]
+        mov esi, bsod_1
+        call printsz
+        mov ah, [color.block]
+        mov esi, bsod_1_plus
+        call printsz
+        cli
+        hlt
         popad
         iret
     ;
 
 bsod_0:
-db CRLF
-db CRLF
-db "             ((((((", CRLF
-db "           ((::::::(", CRLF
-db "         ((:::::::(", CRLF
-db "        (:::::::((", CRLF
-db "        (::::::(", CRLF
-db " :::::: (:::::(", CRLF
-db " :::::: (:::::(", CRLF
-db " :::::: (:::::(", CRLF
-db "        (:::::(", CRLF
-db "        (:::::(", CRLF
-db "        (:::::(", CRLF
-db " :::::: (::::::(", CRLF
-db " :::::: (:::::::((", CRLF
-db " ::::::  ((:::::::(", CRLF
-db "           ((::::::(", CRLF
-db "             ((((((", CRLF
-db CRLF
-db "code: 00000000h mnemonic: #DE", CRLF, 00h
+db "                                                                                "
+db "                                                                                "
+db "             ((((((                                                             "
+db "           ((::::::(             ERROR OCCURRED                                 "
+db "         ((:::::::(                                                             "
+db "        (:::::::((         Error description:                                   "
+db "        (::::::(               Kernel shot attempt to divide by zero            "
+db " :::::: (:::::(            Patential reasons:                                   "
+db " :::::: (:::::(              - Corrupted file system/kernel.hex                 "
+db " :::::: (:::::(              - This is an IDT test                              "
+db "        (:::::(            Ways to solve the problem:                           "
+db "        (:::::(              - reinstall system                                 "
+db "        (:::::(              - install stable kernel                            "
+db " :::::: (::::::(                                                                "
+db " :::::: (:::::::((         If it is not unstable realise or                     "
+db " ::::::  ((:::::::(        kernel was not touched, write me                     "
+db "           ((::::::(       in Habr OS writing blog. Thanks.                     "
+db "             ((((((                                                             "
+db "                                                                                "
+db "                                                                                "
+db "                                                                                "
+db "                                                                                "
+db "                                                                                "
+db "                                                                                ", 0x00
+bsod_0_plus:
+db "code: 00000000h mnemonic: #DE                                                   ", 0x00
+
+bsod_1:
+db "                                                                                "
+db "                                                                                "
+db "             ((((((                                                             "
+db "           ((::::::(             ERROR OCCURRED                                 "
+db "         ((:::::::(                                                             "
+db "        (:::::::((         Error description:                                   "
+db "        (::::::(               Kernel shot attempt to raise NMI                 "
+db " :::::: (:::::(            Patential reasons:                                   "
+db " :::::: (:::::(              - Corrupted file system/kernel.hex                 "
+db " :::::: (:::::(              - This is an IDT test                              "
+db "        (:::::(            Ways to solve the problem:                           "
+db "        (:::::(              - reinstall system                                 "
+db "        (:::::(              - install stable kernel                            "
+db " :::::: (::::::(                                                                "
+db " :::::: (:::::::((         If it is not unstable realise or                     "
+db " ::::::  ((:::::::(        kernel was not touched, write me                     "
+db "           ((::::::(       in Habr OS writing blog. Thanks.                     "
+db "             ((((((                                                             "
+db "                                                                                "
+db "                                                                                "
+db "                                                                                "
+db "                                                                                "
+db "                                                                                "
+db "                                                                                ", 0x00
+bsod_1_plus:
+db "code: 00000001h mnemonic: #NMI                                                  ", 0x00

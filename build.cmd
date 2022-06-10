@@ -1,8 +1,9 @@
 @ECHO OFF
+fasm kernel\kernel.asm
 fasm boot\boot.asm
 fasm boot\second.asm
-fasm kernel\kernel.asm
 fasm collector.asm
-copy collector.bin image.bin
+copy collector.bin image.bin /b
+copy collector.bin image.img /b
 del collector.bin /s /q
-echo Done. See file [image.bin]
+echo Done. See file [image.img]

@@ -32,7 +32,7 @@ printsz msg
 printsz log
 
 mov  ah, 02h
-mov  al, 10h
+mov  al, 2Ch
 mov  cx, 0002h
 mov  bx, 7E00h
 movs es, 0000h

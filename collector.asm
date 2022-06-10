@@ -8,3 +8,7 @@
 file "boot\boot.sec"
 file "boot\second.sec"
 file "kernel\kernel.hex"
+
+times 10000h-$+$$-1 db 0x00
+
+db -1
