@@ -8,25 +8,23 @@ typedef enum bool {
 
 #define NULL ((void*)0)
 
-typedef unsigned char uint8;
-typedef signed char int8;
+typedef unsigned char uint8_t;
+typedef signed char int8_t;
 
-typedef unsigned short uint16;
-typedef signed short int16;
+typedef unsigned short uint16_t;
+typedef signed short int16_t;
 
-typedef unsigned long uint32;
-typedef signed long int32;
+typedef unsigned long uint32_t;
+typedef signed long int32_t;
 
-typedef unsigned long long uint64;
-typedef signed long long int64;
+typedef unsigned long long uint64_t;
+typedef signed long long int64_t;
 
 #ifdef __x86_64__
-	typedef uint64 size_t;
+	typedef uint64_t size_t;
 #else
-	typedef uint32 size_t;
+	typedef uint32_t size_t;
 #endif
-
-typedef bool Mutex;
 
 #define min(a, b) (((a) > (b)) ? (b) : (a))
 #define max(a, b) (((a) > (b)) ? (a) : (b))
@@ -39,16 +37,16 @@ typedef bool Mutex;
 #define inportw(port, out_value) asm("inw %w1, %w0":"=a"(out_value):"d"(port));
 #define inportl(port, out_value) asm("inl %w1, %0":"=a"(out_value):"d"(port));
 
-void memset(void *mem, char value, size_t count);
-void memset_word(void *mem, uint16 value, size_t count);
-void memcpy(void *dest, void *src, size_t count);
-int memcmp(void *mem1, void *mem2, size_t count);
-void *memchr(void *mem, char value, size_t count);
+void *memset(void *mem, char value, size_t count);
+void *memset_word(void *mem, uint16_t value, size_t count);
+void *memcpy(void *dest, const void *src, size_t count);
+int memcmp(const void *mem1, const void *mem2, size_t count);
+void *memchr(const void *mem, char value, size_t count);
 
-size_t strlen(char *str);
-void strcpy(char *dest, char *src);
-void strncpy(char *dest, char*src, size_t max_count);
-int strcmp(char *str1, char *str2);
-char *strchr(char *str, char value);
+size_t strlen(const char *str);
+void strcpy(char *dest, const char *src);
+void strncpy(char *dest, const char *src, size_t max_count);
+int strcmp(const char *str1, const char *str2);
+char *strchr(const char *str, char value);
 
 #endif 
