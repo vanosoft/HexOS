@@ -1,0 +1,1 @@
+qemu-system-x86_64 image.bin -s -d in_asm -D log.$$$
