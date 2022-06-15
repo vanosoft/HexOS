@@ -8,7 +8,6 @@
 format binary as "sec"
 
 org 7E00h
-<<<<<<< Updated upstream
 
 jmp start
 nop
@@ -22,8 +21,6 @@ dd 00001000h
 db 10000000b
 
 start:
-=======
->>>>>>> Stashed changes
 use16
 
 jmp second_entry
@@ -41,7 +38,6 @@ jmp .cycle
 ret
 
 second_entry:
-<<<<<<< Updated upstream
 
 cls
 
@@ -51,11 +47,6 @@ mov ah, 0x02
 mov al, 0x10
 mov cx, 0x0C
 ; dl was not modified
-=======
-mov ah, 02h
-mov al, 08h
-mov cx, 0012h
->>>>>>> Stashed changes
 mov bx, 8100h
 mov bp, 0
 mov es, bp
@@ -90,7 +81,6 @@ cli
 hlt
 jmp $-2
 
-<<<<<<< Updated upstream
 ; data zone
 
 msg0 db "HexOS Second-stage Bootloader v2.2.1 by Ivan Chetchasov", newline, 00h
@@ -124,35 +114,3 @@ times 200h*0x2C/4-1+start-$ db 00h
 ; magic
 
 db EOF
-=======
-bsod:
-db "                                                                                "
-db "                                                                                "
-db "                                                                                "
-db "                           FATAL ERROR OCCURRED                                 "
-db "             ((((((                                                             "
-db "           ((::::::(   Potential causes:                                        "
-db "         ((:::::::(     - Corrupted file 'system/kernel.hxe'                    "
-db "        (:::::::((      - It is unstable OS image                               "
-db "        (::::::(        - Bad sectors in disk                                   "
-db " :::::: (:::::(                                                                 "
-db " :::::: (:::::(        Ways to resolve:                                         "
-db " :::::: (:::::(         - Reinstall OS                                          "
-db "        (:::::(         - Use tool 'repair' in bootable image                   "
-db "        (:::::(                                                                 "
-db "        (:::::(        Also, please, make a bugreport on email                  "
-db " :::::: (::::::(       chetvano@gmail.com or my whatsapp phone                  "
-db " :::::: (:::::::((     number +79653533222. Thank you for rep!                  "
-db " ::::::  ((:::::::(                                                             "
-db "           ((::::::(                                                            "
-db "             ((((((                                                             "
-db "                                                                                "
-db "                                                                                "
-db "                                                                                "
-db "                                                                                "
-db "                                                                                ", 00h
-
-db 128
-
-times 200h*16+$$-$ db 00h
->>>>>>> Stashed changes
