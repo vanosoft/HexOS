@@ -5,7 +5,7 @@
 ;;                                                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-format binary as "hex"
+format binary as "hxe"
 
 ; MACROS
 
@@ -17,10 +17,15 @@ macro movs reg, src {
 }
 
 ; HEADER
+<<<<<<< Updated upstream
 org 0x8100
 
 jmp p32
 nop
+=======
+org 0x08100
+jmp setup
+>>>>>>> Stashed changes
 
 db "system/kernel.hex", 00h
 times 243-$+$$ db 00h
@@ -30,11 +35,14 @@ dd 00000000h
 dd 00001000h
 db 10000000b
 
+<<<<<<< Updated upstream
 ; IMPORTS
 
 include "fs.inc"
 include "str.inc"
 
+=======
+>>>>>>> Stashed changes
 ; DATA
 
 osname db "HexOS", 00h
@@ -57,12 +65,9 @@ GDT: dw 0
         dd GDT
     @@:
 
-; EXECUTABLE
+include "idt.asm"
 
-; switch to P-mode
-
-p32:
-
+<<<<<<< Updated upstream
 cli                     ; NO more interrupts
 lgdt fword[GDT.pointer] ; Load GDT
 mov eax, cr0            ; Where my CR0?
@@ -89,28 +94,51 @@ lidt fword [IDT.pointer]
 
 ; Call 32-bit kernel
 
+=======
+setup:
+
+cli
+cld
+lidt fword [IDT.pointer]
+lgdt fword [GDT.pointer]
+mov eax, cr0
+or al, 1
+mov cr0,eax
+jmp GDT.code:setup2
+
+use32
+
+setup2:
+xor eax, eax
+mov ebx, eax
+mov ecx, eax
+mov edx, eax
+mov eax, GDT.data
+mov word ds, ax
+mov word ss, ax
+mov word gs, ax
+mov word fs, ax
+xor eax, eax
+sti
+>>>>>>> Stashed changes
 call main
-
-; footer, just halt
-; because os mustn`t
-; reach this part of
-; code so maybe fatal
-; error happened.
-
 cli
 hlt
 jmp $-2
 
-; 32-BIT PART
 main:
     mov eax, 0
     idiv eax
     ret
+<<<<<<< Updated upstream
 
 ; FILLER
 
 times 1000h-$+$$-1 db 00h
 
 ; MAGIC
+=======
+>>>>>>> Stashed changes
 
-db EOF
+db 128
+times 1000h-$+$$ db 00h
