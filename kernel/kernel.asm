@@ -5,7 +5,7 @@
 ;;                                                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-format binary as "hex"
+format binary as "hxe"
 
 ; MACROS
 
@@ -28,12 +28,6 @@ dd 00000000h
 dd 00000000h
 dd 00001000h
 db 10000000b
-
-; IMPORTS
-
-include "fs.inc"
-include "str.inc"
-include "../boot/boot.inc"
 
 ; DATA
 
@@ -62,19 +56,22 @@ GDT: dw 0
 p32:
 
 cli                     ; NO more interrupts
-lgdt fword[GDT.pointer] ; Load GDT
+lidt fword [IDT.pointer]
+lgdt fword [GDT.pointer] ; Load GDT
 mov eax, cr0            ; Where my CR0?
 or al, 1                ; set lowest bit
 mov cr0,eax             ; apply changes
 jmp code_seg:pmode     ; jump next
 
-.pmode:
+include "idt.asm"
+
+pmode:
 
 use32
 
 ; I also need to set data segment
 
-mov ax, GDT.data
+mov ax, data_seg
 mov ds, ax
 ; stack segment
 mov ss, ax
@@ -97,8 +94,11 @@ jmp $-2
 
 ; 32-BIT PART
 main:
-include "kern32.asm"
+    mov eax, 0
+    idiv eax
 
 ; MAGIC
 
-db EOF
+db 128
+
+times 2000h-$+$$ db 0x00

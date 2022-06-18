@@ -29,10 +29,9 @@ cls
 
 ;printsz msg0
 
-mov ah, 02h
-mov al, 08h
-mov cx, 0012h; 0012h is correct
-; dl was not modified
+mov ah, 0x02
+mov al, 0x08
+mov cx, 0x0C
 mov bx, 8100h
 movs es, 0000h
 int 13h
@@ -54,7 +53,7 @@ MOV BH, 17h
 INT 10h
 
 ; print data
-printsz bsod0
+printsz bsod
 
 jmp endall
 
@@ -65,26 +64,26 @@ hlt
 jmp $-2
 
 bsod:
-db "Source: second-stage bootloader                                                 "
+db "                                                                                "
+db " source: bootldr                                                                "
+db "                                                                                "
 db "                                                                                "
 db "             ((((((                                                             "
 db "           ((::::::(             ERROR OCCURRED                                 "
 db "         ((:::::::(                                                             "
 db "        (:::::::((         Error description:                                   "
-db "        (::::::(               Kernel reached unsolving situation               "
+db "        (::::::(               bootldr caught unhandled exception               "
 db " :::::: (:::::(            Patential reasons:                                   "
-db " :::::: (:::::(              - Corrupted file system/kernel.hex                 "
-db " :::::: (:::::(              - This is an unstable realise                      "
+db " :::::: (:::::(              - Corrupted file system/bootldr.hxe                "
+db " :::::: (:::::(              - This is an unstable release                      "
 db "        (:::::(            Ways to solve the problem:                           "
 db "        (:::::(              - reinstall system                                 "
-db "        (:::::(              - install stable kernel                            "
+db "        (:::::(              - install stable bootldr                           "
 db " :::::: (::::::(                                                                "
 db " :::::: (:::::::((         If it is not unstable realise or                     "
-db " ::::::  ((:::::::(        kernel was not touched, write me                     "
+db " ::::::  ((:::::::(        bootldr wasn`t touched, write me                     "
 db "           ((::::::(       in Habr OS writing blog. Thanks.                     "
 db "             ((((((                                                             "
-db "                                                                                "
-db "                                                                                "
 db "                                                                                "
 db "                                                                                "
 db "                                                                                "

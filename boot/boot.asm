@@ -25,12 +25,6 @@ include "boot.inc"
 
 boot_entry:
 
-cls
-
-printsz msg
-
-printsz log
-
 mov  ah, 02h
 mov  al, 10h
 mov  cx, 0002h

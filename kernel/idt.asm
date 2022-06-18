@@ -49,22 +49,6 @@ IDT:
         dd IDT
     @@:
 
-dumpeax:
-.h dd 0x1F411F45
-.l dd 0x1F3A1F58
-dumpebx:
-.h dd 0x1F421F45
-.l dd 0x1F3A1F58
-dumpecx:
-.h dd 0x1F431F45
-.l dd 0x1F3A1F58
-dumpedi:
-.h dd 0x1F531F45
-.l dd 0x1F3A1F49
-dumpesi:
-.h dd 0x1F441F45
-.l dd 0x1F3A1F49
-
 ISR:
     ._0: ; #DE
         mov ah, [color.bsod]
