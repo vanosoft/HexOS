@@ -39,8 +39,13 @@ int 13h
 
 jc err0
 
+<<<<<<< Updated upstream
 mov sp, 810h
 movs ds, 8100h
+=======
+mov sp, 0x08100
+cli
+>>>>>>> Stashed changes
 jmp 0000:8100h
 
 err0:
@@ -65,6 +70,7 @@ cli
 hlt
 jmp $-2
 
+<<<<<<< Updated upstream
 ; data zone
 
 msg0 db "HexOS Second-stage Bootloader v2.2.1 by Ivan Chetchasov", newline
@@ -99,3 +105,35 @@ times 200h*16-1+start-$ db 00h
 ; magic
 
 db EOF
+=======
+bsod:
+db "Source: second-stage bootloader                                                 "
+db "                                                                                "
+db "             ((((((                                                             "
+db "           ((::::::(             ERROR OCCURRED                                 "
+db "         ((:::::::(                                                             "
+db "        (:::::::((         Error description:                                   "
+db "        (::::::(               Kernel reached unsolving situation               "
+db " :::::: (:::::(            Patential reasons:                                   "
+db " :::::: (:::::(              - Corrupted file system/kernel.hex                 "
+db " :::::: (:::::(              - This is an unstable realise                      "
+db "        (:::::(            Ways to solve the problem:                           "
+db "        (:::::(              - reinstall system                                 "
+db "        (:::::(              - install stable kernel                            "
+db " :::::: (::::::(                                                                "
+db " :::::: (:::::::((         If it is not unstable realise or                     "
+db " ::::::  ((:::::::(        kernel was not touched, write me                     "
+db "           ((::::::(       in Habr OS writing blog. Thanks.                     "
+db "             ((((((                                                             "
+db "                                                                                "
+db "                                                                                "
+db "                                                                                "
+db "                                                                                "
+db "                                                                                "
+db "                                                                                "
+db "                                                                                ", 0x00
+
+db 128
+
+times 200h*(0Ch-2)-$+$$ db 00h
+>>>>>>> Stashed changes

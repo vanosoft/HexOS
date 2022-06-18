@@ -10,11 +10,12 @@ format binary as "hex"
 ; MACROS
 
 macro movs reg, src {
-    push ax
-    mov ax, src
-    mov reg, ax
-    pop ax
+    push word src
+    pop reg
 }
+
+code_seg equ 0x08
+data_seg equ 0x10
 
 ; HEADER
 org 0x8100
@@ -45,12 +46,10 @@ oscopy db "Ivan Chetchasov Vladimirovich 2019-2022 (c) All rights reserved.", 00
 GDT: dw 0
     .size dw @f-GDT-1
     .linear dd GDT
-    .code = $ - GDT
-        dw -1,0
-        db 0,9ah,0cfh,0
-    .data = $ - GDT
-        dw -1,0
-        db 0,92h,0cfh,0
+    dw -1,0
+    db 0,9ah,0cfh,0
+    dw -1,0
+    db 0,92h,0cfh,0
     .pointer:
         dw GDT.size
         dd GDT
@@ -67,7 +66,11 @@ lgdt fword[GDT.pointer] ; Load GDT
 mov eax, cr0            ; Where my CR0?
 or al, 1                ; set lowest bit
 mov cr0,eax             ; apply changes
+<<<<<<< Updated upstream
 jmp GDT.code:.pmode     ; jump next
+=======
+jmp code_seg:pmode     ; jump next
+>>>>>>> Stashed changes
 
 .pmode:
 
@@ -99,10 +102,6 @@ jmp $-2
 ; 32-BIT PART
 main:
 include "kern32.asm"
-
-; FILLER
-
-times 1000h-$+$$-1 db 00h
 
 ; MAGIC
 
