@@ -57,7 +57,7 @@ GDT: dw 0
         dd GDT
     @@:
 
-include "idt.asm"
+p32:
 
 cli                     ; NO more interrupts
 lgdt fword[GDT.pointer] ; Load GDT
@@ -95,11 +95,6 @@ main:
     idiv eax
     ret
 
-; FILLER
-
-times 1000h-$+$$-1 db 00h
-
-; MAGIC
-
 db 128
-times 1000h-$+$$ db 00h
+
+times 2000h-$+$$ db 00h

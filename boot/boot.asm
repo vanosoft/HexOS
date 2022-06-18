@@ -28,8 +28,6 @@ mov es, bp
 int 13h
 
 mov bp, 0x07E00
-mov ds, bp
-xor bp, bp
 jmp 0000:7E00h
 
 cli

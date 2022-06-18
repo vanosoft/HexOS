@@ -67,48 +67,38 @@ dumpesi:
 
 ISR:
     ._0: ; #DE
-        pushad
         mov ah, [color.bsod]
-        mov esi, bsod_0
-        call printsz
-        mov ah, [color.block]
-        mov esi, bsod_0_plus
+        mov esi, bsod
         call printsz
         cli
         hlt
-        popad
         iret
     ._1: ; #DB
-        pushad
         cli
         hlt
-        popad
         iret
-    ._2:
-        pushad
+    ._2: ; #NMI
         mov ah, [color.bsod]
-        mov esi, bsod_1
-        call printsz
-        mov ah, [color.block]
-        mov esi, bsod_1_plus
+        mov esi, bsod
         call printsz
         cli
         hlt
-        popad
         iret
     ;
 
-bsod_0:
+bsod:
+db "                                                                                "
+db " source: kernel                                                                 "
 db "                                                                                "
 db "                                                                                "
 db "             ((((((                                                             "
 db "           ((::::::(             ERROR OCCURRED                                 "
 db "         ((:::::::(                                                             "
 db "        (:::::::((         Error description:                                   "
-db "        (::::::(               Kernel shot attempt to divide by zero            "
+db "        (::::::(               kernel caught unhandled exception                "
 db " :::::: (:::::(            Patential reasons:                                   "
-db " :::::: (:::::(              - Corrupted file system/kernel.hex                 "
-db " :::::: (:::::(              - This is an IDT test                              "
+db " :::::: (:::::(              - Corrupted file system/kernel.hxe                 "
+db " :::::: (:::::(              - This is an unstable release                      "
 db "        (:::::(            Ways to solve the problem:                           "
 db "        (:::::(              - reinstall system                                 "
 db "        (:::::(              - install stable kernel                            "
@@ -121,35 +111,4 @@ db "                                                                            
 db "                                                                                "
 db "                                                                                "
 db "                                                                                "
-db "                                                                                "
 db "                                                                                ", 0x00
-bsod_0_plus:
-db "code: 00000000h mnemonic: #DE                                                   ", 0x00
-
-bsod_1:
-db "                                                                                "
-db "                                                                                "
-db "             ((((((                                                             "
-db "           ((::::::(             ERROR OCCURRED                                 "
-db "         ((:::::::(                                                             "
-db "        (:::::::((         Error description:                                   "
-db "        (::::::(               Kernel shot attempt to raise NMI                 "
-db " :::::: (:::::(            Patential reasons:                                   "
-db " :::::: (:::::(              - Corrupted file system/kernel.hex                 "
-db " :::::: (:::::(              - This is an IDT test                              "
-db "        (:::::(            Ways to solve the problem:                           "
-db "        (:::::(              - reinstall system                                 "
-db "        (:::::(              - install stable kernel                            "
-db " :::::: (::::::(                                                                "
-db " :::::: (:::::::((         If it is not unstable realise or                     "
-db " ::::::  ((:::::::(        kernel was not touched, write me                     "
-db "           ((::::::(       in Habr OS writing blog. Thanks.                     "
-db "             ((((((                                                             "
-db "                                                                                "
-db "                                                                                "
-db "                                                                                "
-db "                                                                                "
-db "                                                                                "
-db "                                                                                ", 0x00
-bsod_1_plus:
-db "code: 00000001h mnemonic: #NMI                                                  ", 0x00

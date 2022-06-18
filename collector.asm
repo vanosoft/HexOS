@@ -7,7 +7,7 @@
 
 file "boot\boot.sec"
 file "boot\second.sec"
-file "kernel\kernel.hex"
+file "kernel\kernel.hxe"
 
 ;times 10000h-$+$$-1 db 0x00
 
