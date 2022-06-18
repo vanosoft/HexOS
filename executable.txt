@@ -1,0 +1,4 @@
+1. file/chunk header
+2. jump to 0 in header
+3. after header - dword link to code start
+4. stack top link dword

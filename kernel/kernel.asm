@@ -5,7 +5,7 @@
 ;;                                                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-format binary as "hex"
+format binary as "hxe"
 
 ; MACROS
 
@@ -18,9 +18,11 @@ macro movs reg, src {
 
 ; HEADER
 org 0x8100
-jmp p32
 
-db "System/kernel.hex", 00h
+jmp p32
+nop
+
+db "system/kernel.hex", 00h
 times 243-$+$$ db 00h
 
 dd 00000000h
@@ -32,7 +34,6 @@ db 10000000b
 
 include "fs.inc"
 include "str.inc"
-include "../boot/boot.inc"
 
 ; DATA
 
@@ -56,10 +57,6 @@ GDT: dw 0
         dd GDT
     @@:
 
-; EXECUTABLE
-
-; switch to P-mode
-
 p32:
 
 cli                     ; NO more interrupts
@@ -67,9 +64,11 @@ lgdt fword[GDT.pointer] ; Load GDT
 mov eax, cr0            ; Where my CR0?
 or al, 1                ; set lowest bit
 mov cr0,eax             ; apply changes
-jmp GDT.code:.pmode     ; jump next
+jmp GDT.code:pmode     ; jump next
 
-.pmode:
+include "idt.asm"
+
+pmode:
 
 use32
 
@@ -82,27 +81,20 @@ mov ss, ax
 ; graphic segment
 movs gs, ax
 
+lidt fword [IDT.pointer]
+
 ; Call 32-bit kernel
 
 call main
-
-; footer, just halt
-; because os mustn`t
-; reach this part of
-; code so maybe fatal
-; error happened.
-
 cli
 hlt
 jmp $-2
 
-; 32-BIT PART
-include "kern32.asm"
+main:
+    mov eax, 0
+    idiv eax
+    ret
 
-; FILLER
+db 128
 
-times 1000h-$+$$-1 db 00h
-
-; MAGIC
-
-db EOF
+times 2000h-$+$$ db 00h
