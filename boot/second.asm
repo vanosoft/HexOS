@@ -8,43 +8,53 @@
 format binary as "sec"
 
 org 7E00h
+
+jmp start
+nop
+
+db "system/bootsec.hex", 0x00
+times 243-$+$$ db 00h
+
+dd 00000000h
+dd 00000000h
+dd 00001000h
+db 10000000b
+
 start:
 use16
 
-; header zone
-
 jmp second_entry
-
 nop
 
-; import zone
-
-include "second.inc"
-
-; executable zone
+printsz:
+mov ah, 0x0E
+.cycle:
+lodsb
+test al, al
+jz .end
+int 10h
+jmp .cycle
+.end:
+ret
 
 second_entry:
 
-cls
-
-;printsz msg0
-
 mov ah, 0x02
-mov al, 0x08
+mov al, 0x10
 mov cx, 0x0C
 mov bx, 8100h
-movs es, 0000h
+mov bp, 0
+mov es, bp
 int 13h
 
 jc err0
 
-mov sp, 8100h
+mov sp, 0x08100
 jmp 0000:8100h
 
 err0:
 
 ; construct BSOD stylish
-cls
 MOV AH, 06h
 XOR AL, AL
 XOR CX, CX
@@ -53,7 +63,8 @@ MOV BH, 17h
 INT 10h
 
 ; print data
-printsz bsod
+mov si, bsod
+call printsz
 
 jmp endall
 
@@ -62,6 +73,12 @@ endall:
 cli
 hlt
 jmp $-2
+
+newline equ 0dh, 0ah
+
+; data zone
+
+msg0 db "HexOS Second-stage Bootloader v2.2.1 by Ivan Chetchasov", newline, 00h
 
 bsod:
 db "                                                                                "
@@ -92,4 +109,4 @@ db "                                                                            
 
 db 128
 
-times 200h*(0Ch-2)-$+$$ db 00h
+times 0x01400+$$-$ db 00h

@@ -14821,6 +14821,7 @@ IN:
 0x000c570a:  66 58                    popl     %eax
 0x000c570c:  cf                       iretw    
 
+Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000ec53f:  83 c4 28                 addl     $0x28, %esp
@@ -18781,6 +18782,7 @@ IN:
 0x07faba3d:  89 d0                    movl     %edx, %eax
 0x07faba3f:  eb 02                    jmp      0x7faba43
 
+Servicing hardware INT=0x08
 ----------------
 IN: 
 0x07fb5236:  85 ed                    testl    %ebp, %ebp
@@ -18950,7 +18952,6 @@ IN:
 0x000ca548:  c0 e8 03                 shrb     $3, %al
 0x000ca54b:  e8 d7 ff                 callw    0xca525
 
-Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000ca54e:  b0 2e                    movb     $0x2e, %al
@@ -19389,6 +19390,7 @@ IN:
 0x000ca2f9:  31 ff                    xorw     %di, %di
 0x000ca2fb:  e8 e1 01                 callw    0xca4df
 
+Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000ca2fe:  66 89 f0                 movl     %esi, %eax
@@ -19437,6 +19439,362 @@ IN:
 IN: 
 0x000ca1e7:  67 66 f3 a5              rep movsl (%esi), %es:(%edi)
 
+Servicing hardware INT=0x09
+----------------
+IN: 
+0x000fe987:  66 68 c8 ce 00 00        pushl    $0xcec8
+0x000fe98d:  e9 54 e9                 jmp      0xfd2e4
+
+----------------
+IN: 
+0x000fcec8:  e4 64                    inb      $0x64, %al
+0x000fceca:  a8 20                    testb    $0x20, %al
+0x000fcecc:  74 10                    je       0xfcede
+
+----------------
+IN: 
+0x000fcede:  e4 60                    inb      $0x60, %al
+0x000fcee0:  66 ba 00 da 00 00        movl     $0xda00, %edx
+0x000fcee6:  8e c2                    movw     %dx, %es
+0x000fcee8:  26 8a 16 cc ef           movb     %es:0xefcc, %dl
+0x000fceed:  80 e2 01                 andb     $1, %dl
+0x000fcef0:  74 19                    je       0xfcf0b
+
+----------------
+IN: 
+0x000fcef2:  66 0f b6 c0              movzbl   %al, %eax
+0x000fcef6:  66 e8 16 b3 ff ff        calll    0xf8212
+
+----------------
+IN: 
+0x000f8212:  66 55                    pushl    %ebp
+0x000f8214:  66 57                    pushl    %edi
+0x000f8216:  66 56                    pushl    %esi
+0x000f8218:  66 53                    pushl    %ebx
+0x000f821a:  66 83 ec 2c              subl     $0x2c, %esp
+0x000f821e:  66 89 c3                 movl     %eax, %ebx
+0x000f8221:  66 b9 26 00 00 00        movl     $0x26, %ecx
+0x000f8227:  66 31 d2                 xorl     %edx, %edx
+0x000f822a:  67 66 8d 44 24 06        leal     6(%esp), %eax
+0x000f8230:  66 e8 0f f0 ff ff        calll    0xf7245
+
+----------------
+IN: 
+0x000f8236:  66 0f b6 db              movzbl   %bl, %ebx
+0x000f823a:  80 cf 4f                 orb      $0x4f, %bh
+0x000f823d:  67 66 89 5c 24 22        movl     %ebx, 0x22(%esp)
+0x000f8243:  67 c7 44 24 2a 01 02     movw     $0x201, 0x2a(%esp)
+0x000f824a:  66 be 60 d0 00 00        movl     $0xd060, %esi
+0x000f8250:  66 0f b7 f6              movzwl   %si, %esi
+0x000f8254:  66 89 f2                 movl     %esi, %edx
+0x000f8257:  66 e8 36 ff ff ff        calll    0xf8193
+
+----------------
+IN: 
+0x000fd060:  cd 15                    int      $0x15
+
+----------------
+IN: 
+0x000ff859:  80 fc 89                 cmpb     $0x89, %ah
+0x000ff85c:  0f 84 e4 d9              je       0xfd244
+
+----------------
+IN: 
+0x000ff860:  66 68 47 bb 00 00        pushl    $0xbb47
+0x000ff866:  e9 08 db                 jmp      0xfd371
+
+----------------
+IN: 
+0x000fd371:  fa                       cli      
+0x000fd372:  fc                       cld      
+0x000fd373:  1e                       pushw    %ds
+0x000fd374:  66 50                    pushl    %eax
+0x000fd376:  66 b8 00 da 00 00        movl     $0xda00, %eax
+0x000fd37c:  8e d8                    movw     %ax, %ds
+0x000fd37e:  66 a1 30 f0              movl     0xf030, %eax
+0x000fd382:  66 83 e8 30              subl     $0x30, %eax
+0x000fd386:  67 66 8f 40 1c           popl     0x1c(%eax)
+0x000fd38b:  67 8f 00                 popw     (%eax)
+0x000fd38e:  67 66 89 78 04           movl     %edi, 4(%eax)
+0x000fd393:  67 66 89 70 08           movl     %esi, 8(%eax)
+0x000fd398:  67 66 89 68 0c           movl     %ebp, 0xc(%eax)
+0x000fd39d:  67 66 89 58 10           movl     %ebx, 0x10(%eax)
+0x000fd3a2:  67 66 89 50 14           movl     %edx, 0x14(%eax)
+0x000fd3a7:  67 66 89 48 18           movl     %ecx, 0x18(%eax)
+0x000fd3ac:  67 8c 40 02              movw     %es, 2(%eax)
+0x000fd3b0:  66 59                    popl     %ecx
+0x000fd3b2:  67 66 89 60 28           movl     %esp, 0x28(%eax)
+0x000fd3b7:  67 8c 50 2c              movw     %ss, 0x2c(%eax)
+0x000fd3bb:  67 66 8f 40 20           popl     0x20(%eax)
+0x000fd3c0:  67 8f 40 24              popw     0x24(%eax)
+0x000fd3c4:  8c da                    movw     %ds, %dx
+0x000fd3c6:  8e d2                    movw     %dx, %ss
+
+----------------
+IN: 
+0x000fd3c8:  66 89 c4                 movl     %eax, %esp
+
+----------------
+IN: 
+0x000fd3cb:  66 ff d1                 calll    *%ecx
+
+----------------
+IN: 
+0x000fbb47:  66 55                    pushl    %ebp
+0x000fbb49:  66 57                    pushl    %edi
+0x000fbb4b:  66 56                    pushl    %esi
+0x000fbb4d:  66 53                    pushl    %ebx
+0x000fbb4f:  66 83 ec 0c              subl     $0xc, %esp
+0x000fbb53:  66 89 c3                 movl     %eax, %ebx
+0x000fbb56:  67 8a 40 1d              movb     0x1d(%eax), %al
+0x000fbb5a:  3c 86                    cmpb     $0x86, %al
+0x000fbb5c:  0f 84 e1 03              je       0xfbf41
+
+----------------
+IN: 
+0x000fbb60:  77 32                    ja       0xfbb94
+
+----------------
+IN: 
+0x000fbb62:  3c 53                    cmpb     $0x53, %al
+0x000fbb64:  0f 84 14 02              je       0xfbd7c
+
+----------------
+IN: 
+0x000fbb68:  77 15                    ja       0xfbb7f
+
+----------------
+IN: 
+0x000fbb6a:  3c 4f                    cmpb     $0x4f, %al
+0x000fbb6c:  0f 84 dc 06              je       0xfc24c
+
+----------------
+IN: 
+0x000fc24c:  67 83 4b 24 01           orw      $1, 0x24(%ebx)
+0x000fc251:  eb 7e                    jmp      0xfc2d1
+
+----------------
+IN: 
+0x000fc2d1:  66 83 c4 0c              addl     $0xc, %esp
+0x000fc2d5:  66 5b                    popl     %ebx
+0x000fc2d7:  66 5e                    popl     %esi
+0x000fc2d9:  66 5f                    popl     %edi
+0x000fc2db:  66 5d                    popl     %ebp
+0x000fc2dd:  66 c3                    retl     
+
+----------------
+IN: 
+0x000fd3ce:  66 89 e0                 movl     %esp, %eax
+0x000fd3d1:  67 8e 50 2c              movw     0x2c(%eax), %ss
+
+----------------
+IN: 
+0x000fd3d5:  67 66 8b 60 28           movl     0x28(%eax), %esp
+
+----------------
+IN: 
+0x000fd3da:  66 5a                    popl     %edx
+0x000fd3dc:  5a                       popw     %dx
+0x000fd3dd:  67 ff 70 24              pushw    0x24(%eax)
+0x000fd3e1:  67 66 ff 70 20           pushl    0x20(%eax)
+0x000fd3e6:  67 66 8b 78 04           movl     4(%eax), %edi
+0x000fd3eb:  67 66 8b 70 08           movl     8(%eax), %esi
+0x000fd3f0:  67 66 8b 68 0c           movl     0xc(%eax), %ebp
+0x000fd3f5:  67 66 8b 58 10           movl     0x10(%eax), %ebx
+0x000fd3fa:  67 66 8b 50 14           movl     0x14(%eax), %edx
+0x000fd3ff:  67 66 8b 48 18           movl     0x18(%eax), %ecx
+0x000fd404:  67 8e 40 02              movw     2(%eax), %es
+0x000fd408:  67 66 ff 70 1c           pushl    0x1c(%eax)
+0x000fd40d:  67 8e 18                 movw     (%eax), %ds
+0x000fd410:  66 58                    popl     %eax
+0x000fd412:  cf                       iretw    
+
+----------------
+IN: 
+0x000fd062:  cb                       lretw    
+
+----------------
+IN: 
+0x000f825d:  67 f6 44 24 2a 01        testb    $1, 0x2a(%esp)
+0x000f8263:  0f 84 85 03              je       0xf85ec
+
+----------------
+IN: 
+0x000f8267:  67 66 8b 6c 24 22        movl     0x22(%esp), %ebp
+0x000f826d:  66 ba 40 00 00 00        movl     $0x40, %edx
+0x000f8273:  8e c2                    movw     %dx, %es
+0x000f8275:  26 8a 0e 96 00           movb     %es:0x96, %cl
+0x000f827a:  67 66 8d 55 20           leal     0x20(%ebp), %edx
+0x000f827f:  80 fa 01                 cmpb     $1, %dl
+0x000f8282:  77 14                    ja       0xf8298
+
+----------------
+IN: 
+0x000f8298:  66 89 e8                 movl     %ebp, %eax
+0x000f829b:  66 25 80 00 00 00        andl     $0x80, %eax
+0x000f82a1:  66 89 c3                 movl     %eax, %ebx
+0x000f82a4:  66 89 ea                 movl     %ebp, %edx
+0x000f82a7:  66 83 e2 7f              andl     $0x7f, %edx
+0x000f82ab:  f6 c1 03                 testb    $3, %cl
+0x000f82ae:  74 22                    je       0xf82d2
+
+----------------
+IN: 
+0x000f82d2:  66 0f b6 fa              movzbl   %dl, %edi
+0x000f82d6:  80 fa 3a                 cmpb     $0x3a, %dl
+0x000f82d9:  74 7d                    je       0xf8358
+
+----------------
+IN: 
+0x000f82db:  77 29                    ja       0xf8306
+
+----------------
+IN: 
+0x000f82dd:  80 fa 36                 cmpb     $0x36, %dl
+0x000f82e0:  0f 84 a3 00              je       0xf8387
+
+----------------
+IN: 
+0x000f82e4:  77 0f                    ja       0xf82f5
+
+----------------
+IN: 
+0x000f82f5:  80 fa 37                 cmpb     $0x37, %dl
+0x000f82f8:  0f 84 6f 01              je       0xf846b
+
+----------------
+IN: 
+0x000f82fc:  80 fa 38                 cmpb     $0x38, %dl
+0x000f82ff:  0f 84 bd 00              je       0xf83c0
+
+----------------
+IN: 
+0x000f83c0:  80 e1 02                 andb     $2, %cl
+0x000f83c3:  74 11                    je       0xf83d6
+
+----------------
+IN: 
+0x000f83d6:  66 6a 00                 pushl    $0
+0x000f83d9:  66 31 c9                 xorl     %ecx, %ecx
+0x000f83dc:  66 ba 08 02 00 00        movl     $0x208, %edx
+0x000f83e2:  eb 95                    jmp      0xf8379
+
+----------------
+IN: 
+0x000f8379:  66 89 d8                 movl     %ebx, %eax
+0x000f837c:  66 e8 d9 e8 ff ff        calll    0xf6c5b
+
+----------------
+IN: 
+0x000f6c5b:  66 57                    pushl    %edi
+0x000f6c5d:  66 56                    pushl    %esi
+0x000f6c5f:  66 53                    pushl    %ebx
+0x000f6c61:  66 89 c6                 movl     %eax, %esi
+0x000f6c64:  66 89 d3                 movl     %edx, %ebx
+0x000f6c67:  66 89 ca                 movl     %ecx, %edx
+0x000f6c6a:  67 66 8b 7c 24 10        movl     0x10(%esp), %edi
+0x000f6c70:  66 b8 40 00 00 00        movl     $0x40, %eax
+0x000f6c76:  8e c0                    movw     %ax, %es
+0x000f6c78:  26 a1 17 00              movw     %es:0x17, %ax
+0x000f6c7c:  26 8a 0e 96 00           movb     %es:0x96, %cl
+0x000f6c81:  66 85 f6                 testl    %esi, %esi
+0x000f6c84:  74 0e                    je       0xf6c94
+
+----------------
+IN: 
+0x000f6c86:  66 f7 d3                 notl     %ebx
+0x000f6c89:  66 21 d8                 andl     %ebx, %eax
+0x000f6c8c:  66 f7 d2                 notl     %edx
+0x000f6c8f:  66 21 d1                 andl     %edx, %ecx
+0x000f6c92:  eb 09                    jmp      0xf6c9d
+
+----------------
+IN: 
+0x000f6c9d:  66 ba 40 00 00 00        movl     $0x40, %edx
+0x000f6ca3:  8e c2                    movw     %dx, %es
+0x000f6ca5:  26 a3 17 00              movw     %ax, %es:0x17
+0x000f6ca9:  8e c2                    movw     %dx, %es
+0x000f6cab:  26 88 0e 96 00           movb     %cl, %es:0x96
+0x000f6cb0:  66 5b                    popl     %ebx
+0x000f6cb2:  66 5e                    popl     %esi
+0x000f6cb4:  66 5f                    popl     %edi
+0x000f6cb6:  66 c3                    retl     
+
+----------------
+IN: 
+0x000f8382:  66 59                    popl     %ecx
+0x000f8384:  e9 65 02                 jmp      0xf85ec
+
+----------------
+IN: 
+0x000f85ec:  66 83 c4 2c              addl     $0x2c, %esp
+0x000f85f0:  66 5b                    popl     %ebx
+0x000f85f2:  66 5e                    popl     %esi
+0x000f85f4:  66 5f                    popl     %edi
+0x000f85f6:  66 5d                    popl     %ebp
+0x000f85f8:  66 c3                    retl     
+
+----------------
+IN: 
+0x000fcefc:  66 31 d2                 xorl     %edx, %edx
+0x000fceff:  66 b8 ae 00 00 00        movl     $0xae, %eax
+0x000fcf05:  66 e8 e0 a6 ff ff        calll    0xf75eb
+
+----------------
+IN: 
+0x000f75eb:  66 55                    pushl    %ebp
+0x000f75ed:  66 57                    pushl    %edi
+0x000f75ef:  66 56                    pushl    %esi
+0x000f75f1:  66 53                    pushl    %ebx
+0x000f75f3:  66 89 c5                 movl     %eax, %ebp
+0x000f75f6:  66 89 d6                 movl     %edx, %esi
+0x000f75f9:  66 e8 67 7a 00 00        calll    0xff066
+
+----------------
+IN: 
+0x000ff066:  66 53                    pushl    %ebx
+0x000ff068:  66 bb 10 27 00 00        movl     $0x2710, %ebx
+0x000ff06e:  e4 64                    inb      $0x64, %al
+0x000ff070:  a8 02                    testb    $2, %al
+0x000ff072:  74 28                    je       0xff09c
+
+----------------
+IN: 
+0x000ff09c:  66 31 c0                 xorl     %eax, %eax
+0x000ff09f:  66 5b                    popl     %ebx
+0x000ff0a1:  66 c3                    retl     
+
+----------------
+IN: 
+0x000f75ff:  66 89 c3                 movl     %eax, %ebx
+0x000f7602:  66 85 c0                 testl    %eax, %eax
+0x000f7605:  75 2f                    jne      0xf7636
+
+----------------
+IN: 
+0x000f7607:  66 89 ef                 movl     %ebp, %edi
+0x000f760a:  66 c1 ff 0c              sarl     $0xc, %edi
+0x000f760e:  66 89 e8                 movl     %ebp, %eax
+0x000f7611:  e6 64                    outb     %al, $0x64
+0x000f7613:  66 31 c0                 xorl     %eax, %eax
+0x000f7616:  66 39 c7                 cmpl     %eax, %edi
+0x000f7619:  7e 1b                    jle      0xf7636
+
+----------------
+IN: 
+0x000f7636:  66 89 d8                 movl     %ebx, %eax
+0x000f7639:  66 5b                    popl     %ebx
+0x000f763b:  66 5e                    popl     %esi
+0x000f763d:  66 5f                    popl     %edi
+0x000f763f:  66 5d                    popl     %ebp
+0x000f7641:  66 c3                    retl     
+
+----------------
+IN: 
+0x000fcf0b:  b0 20                    movb     $0x20, %al
+0x000fcf0d:  e6 20                    outb     %al, $0x20
+0x000fcf0f:  66 c3                    retl     
+
 ----------------
 IN: 
 0x000ca1eb:  07                       popw     %es
@@ -19471,7 +19829,6 @@ IN:
 0x000ca23b:  00 c3                    addb     %al, %bl
 0x000ca23d:  e2 fb                    loop     0xca23a
 
-Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000ca23f:  28 1e 06 00              subb     %bl, 6
@@ -19627,41 +19984,6 @@ IN:
 
 ----------------
 IN: 
-0x000fd371:  fa                       cli      
-0x000fd372:  fc                       cld      
-0x000fd373:  1e                       pushw    %ds
-0x000fd374:  66 50                    pushl    %eax
-0x000fd376:  66 b8 00 da 00 00        movl     $0xda00, %eax
-0x000fd37c:  8e d8                    movw     %ax, %ds
-0x000fd37e:  66 a1 30 f0              movl     0xf030, %eax
-0x000fd382:  66 83 e8 30              subl     $0x30, %eax
-0x000fd386:  67 66 8f 40 1c           popl     0x1c(%eax)
-0x000fd38b:  67 8f 00                 popw     (%eax)
-0x000fd38e:  67 66 89 78 04           movl     %edi, 4(%eax)
-0x000fd393:  67 66 89 70 08           movl     %esi, 8(%eax)
-0x000fd398:  67 66 89 68 0c           movl     %ebp, 0xc(%eax)
-0x000fd39d:  67 66 89 58 10           movl     %ebx, 0x10(%eax)
-0x000fd3a2:  67 66 89 50 14           movl     %edx, 0x14(%eax)
-0x000fd3a7:  67 66 89 48 18           movl     %ecx, 0x18(%eax)
-0x000fd3ac:  67 8c 40 02              movw     %es, 2(%eax)
-0x000fd3b0:  66 59                    popl     %ecx
-0x000fd3b2:  67 66 89 60 28           movl     %esp, 0x28(%eax)
-0x000fd3b7:  67 8c 50 2c              movw     %ss, 0x2c(%eax)
-0x000fd3bb:  67 66 8f 40 20           popl     0x20(%eax)
-0x000fd3c0:  67 8f 40 24              popw     0x24(%eax)
-0x000fd3c4:  8c da                    movw     %ds, %dx
-0x000fd3c6:  8e d2                    movw     %dx, %ss
-
-----------------
-IN: 
-0x000fd3c8:  66 89 c4                 movl     %eax, %esp
-
-----------------
-IN: 
-0x000fd3cb:  66 ff d1                 calll    *%ecx
-
-----------------
-IN: 
 0x000fb9b6:  66 53                    pushl    %ebx
 0x000fb9b8:  66 89 c3                 movl     %eax, %ebx
 0x000fb9bb:  66 e8 9f 35 00 00        calll    0xfef60
@@ -19749,6 +20071,7 @@ IN:
 0x000f88ec:  66 31 c0                 xorl     %eax, %eax
 0x000f88ef:  e9 e0 f2                 jmp      0xf7bd2
 
+Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000fb5c3:  66 bd 40 00 00 00        movl     $0x40, %ebp
@@ -19775,33 +20098,6 @@ IN:
 0x000fb682:  66 5f                    popl     %edi
 0x000fb684:  66 5d                    popl     %ebp
 0x000fb686:  66 c3                    retl     
-
-----------------
-IN: 
-0x000fd3ce:  66 89 e0                 movl     %esp, %eax
-0x000fd3d1:  67 8e 50 2c              movw     0x2c(%eax), %ss
-
-----------------
-IN: 
-0x000fd3d5:  67 66 8b 60 28           movl     0x28(%eax), %esp
-
-----------------
-IN: 
-0x000fd3da:  66 5a                    popl     %edx
-0x000fd3dc:  5a                       popw     %dx
-0x000fd3dd:  67 ff 70 24              pushw    0x24(%eax)
-0x000fd3e1:  67 66 ff 70 20           pushl    0x20(%eax)
-0x000fd3e6:  67 66 8b 78 04           movl     4(%eax), %edi
-0x000fd3eb:  67 66 8b 70 08           movl     8(%eax), %esi
-0x000fd3f0:  67 66 8b 68 0c           movl     0xc(%eax), %ebp
-0x000fd3f5:  67 66 8b 58 10           movl     0x10(%eax), %ebx
-0x000fd3fa:  67 66 8b 50 14           movl     0x14(%eax), %edx
-0x000fd3ff:  67 66 8b 48 18           movl     0x18(%eax), %ecx
-0x000fd404:  67 8e 40 02              movw     2(%eax), %es
-0x000fd408:  67 66 ff 70 1c           pushl    0x1c(%eax)
-0x000fd40d:  67 8e 18                 movw     (%eax), %ds
-0x000fd410:  66 58                    popl     %eax
-0x000fd412:  cf                       iretw    
 
 ----------------
 IN: 
@@ -19847,6 +20143,24 @@ IN:
 IN: 
 0x000ca504:  58                       popw     %ax
 0x000ca505:  c3                       retw     
+
+Servicing hardware INT=0x09
+----------------
+IN: 
+0x000f82e6:  80 fa 1d                 cmpb     $0x1d, %dl
+0x000f82e9:  0f 84 af 00              je       0xf839c
+
+----------------
+IN: 
+0x000f839c:  80 e1 02                 andb     $2, %cl
+0x000f839f:  74 11                    je       0xf83b2
+
+----------------
+IN: 
+0x000f83b2:  66 6a 00                 pushl    $0
+0x000f83b5:  66 31 c9                 xorl     %ecx, %ecx
+0x000f83b8:  66 ba 04 01 00 00        movl     $0x104, %edx
+0x000f83be:  eb b9                    jmp      0xf8379
 
 ----------------
 IN: 
@@ -22282,19 +22596,22 @@ IN:
 
 ----------------
 IN: 
-0x00007c00:  e9 8c 00                 jmp      0x7c8f
+0x00007c00:  eb 01                    jmp      0x7c03
 
 ----------------
 IN: 
-0x00007c8f:  b4 02                    movb     $2, %ah
-0x00007c91:  b0 10                    movb     $0x10, %al
-0x00007c93:  b9 02 00                 movw     $2, %cx
-0x00007c96:  bb 00 7e                 movw     $0x7e00, %bx
-0x00007c99:  50                       pushw    %ax
-0x00007c9a:  b8 00 00                 movw     $0, %ax
-0x00007c9d:  8e c0                    movw     %ax, %es
-0x00007c9f:  58                       popw     %ax
-0x00007ca0:  cd 13                    int      $0x13
+0x00007c03:  b8 03 00                 movw     $3, %ax
+0x00007c06:  cd 10                    int      $0x10
+
+----------------
+IN: 
+0x00007c08:  b4 02                    movb     $2, %ah
+0x00007c0a:  b0 2c                    movb     $0x2c, %al
+0x00007c0c:  b9 02 00                 movw     $2, %cx
+0x00007c0f:  bb 00 7e                 movw     $0x7e00, %bx
+0x00007c12:  bd 00 00                 movw     $0, %bp
+0x00007c15:  8e c5                    movw     %bp, %es
+0x00007c17:  cd 13                    int      $0x13
 
 ----------------
 IN: 
@@ -22341,40 +22658,64 @@ IN:
 
 ----------------
 IN: 
-0x00007ca2:  bc 00 7e                 movw     $0x7e00, %sp
-0x00007ca5:  ea 00 7e 00 00           ljmpw    $0x0:$0x7e00
+0x000fa758:  67 29 6b 0a              subw     %bp, 0xa(%ebx)
+0x000fa75c:  66 b8 fa ff ff ff        movl     $0xfffffffa, %eax
+0x000fa762:  eb 22                    jmp      0xfa786
 
 ----------------
 IN: 
-0x00007e00:  eb 0d                    jmp      0x7e0f
+0x000fa902:  66 b9 0c 00 00 00        movl     $0xc, %ecx
+0x000fa908:  66 89 c8                 movl     %ecx, %eax
+0x000fa90b:  66 83 c4 14              addl     $0x14, %esp
+0x000fa90f:  66 5b                    popl     %ebx
+0x000fa911:  66 5e                    popl     %esi
+0x000fa913:  66 5f                    popl     %edi
+0x000fa915:  66 5d                    popl     %ebp
+0x000fa917:  66 c3                    retl     
 
 ----------------
 IN: 
-0x00007e0f:  50                       pushw    %ax
-0x00007e10:  b8 03 00                 movw     $3, %ax
-0x00007e13:  cd 10                    int      $0x10
+0x000fae16:  67 66 0f b7 56 0a        movzwl   0xa(%esi), %edx
+0x000fae1c:  66 39 d7                 cmpl     %edx, %edi
+0x000fae1f:  75 06                    jne      0xfae27
 
 ----------------
 IN: 
-0x00007e15:  58                       popw     %ax
-0x00007e16:  b4 02                    movb     $2, %ah
-0x00007e18:  b0 08                    movb     $8, %al
-0x00007e1a:  b9 0c 00                 movw     $0xc, %cx
-0x00007e1d:  bb 00 81                 movw     $0x8100, %bx
-0x00007e20:  50                       pushw    %ax
-0x00007e21:  b8 00 00                 movw     $0, %ax
-0x00007e24:  8e c0                    movw     %ax, %es
-0x00007e26:  58                       popw     %ax
-0x00007e27:  cd 13                    int      $0x13
+0x000f6ef9:  67 88 50 1d              movb     %dl, 0x1d(%eax)
+0x000f6efd:  67 83 48 24 01           orw      $1, 0x24(%eax)
+0x000f6f02:  66 c3                    retl     
 
 ----------------
 IN: 
-0x00007e29:  72 08                    jb       0x7e33
+0x00007c19:  bd 00 7e                 movw     $0x7e00, %bp
+0x00007c1c:  ea 00 7e 00 00           ljmpw    $0x0:$0x7e00
 
 ----------------
 IN: 
-0x00007e2b:  bc 00 81                 movw     $0x8100, %sp
-0x00007e2e:  ea 00 81 00 00           ljmpw    $0x0:$0x8100
+0x00007e00:  e9 fd 00                 jmp      0x7f00
+
+----------------
+IN: 
+0x00007f00:  eb 0d                    jmp      0x7f0f
+
+----------------
+IN: 
+0x00007f0f:  b4 02                    movb     $2, %ah
+0x00007f11:  b0 10                    movb     $0x10, %al
+0x00007f13:  b9 0c 00                 movw     $0xc, %cx
+0x00007f16:  bb 00 81                 movw     $0x8100, %bx
+0x00007f19:  bd 00 00                 movw     $0, %bp
+0x00007f1c:  8e c5                    movw     %bp, %es
+0x00007f1e:  cd 13                    int      $0x13
+
+----------------
+IN: 
+0x00007f20:  72 08                    jb       0x7f2a
+
+----------------
+IN: 
+0x00007f22:  bc 00 81                 movw     $0x8100, %sp
+0x00007f25:  ea 00 81 00 00           ljmpw    $0x0:$0x8100
 
 ----------------
 IN: 
@@ -22383,572 +22724,76 @@ IN:
 ----------------
 IN: 
 0x0000826c:  fa                       cli      
-0x0000826d:  66 0f 01 1e d3 82        lidtl    0x82d3
-0x00008273:  66 0f 01 16 66 82        lgdtl    0x8266
-0x00008279:  0f 20 c0                 movl     %cr0, %eax
-0x0000827c:  0c 01                    orb      $1, %al
-0x0000827e:  0f 22 c0                 movl     %eax, %cr0
+0x0000826d:  66 0f 01 16 66 82        lgdtl    0x8266
+0x00008273:  0f 20 c0                 movl     %cr0, %eax
+0x00008276:  0c 01                    orb      $1, %al
+0x00008278:  0f 22 c0                 movl     %eax, %cr0
 
 ----------------
 IN: 
-0x00008281:  ea d3 8a 08 00           ljmpw    $0x8:$0x8ad3
+0x0000827b:  ea f5 8a 08 00           ljmpw    $0x8:$0x8af5
 
 ----------------
 IN: 
-0x00008ad3:  66 b8 10 00              movw     $0x10, %ax
-0x00008ad7:  8e d8                    movl     %eax, %ds
+0x00008af5:  66 b8 10 00              movw     $0x10, %ax
+0x00008af9:  8e d8                    movl     %eax, %ds
 
 ----------------
 IN: 
-0x00008ad9:  8e d0                    movl     %eax, %ss
+0x00008afb:  8e d0                    movl     %eax, %ss
 
 ----------------
 IN: 
-0x00008adb:  66 50                    pushw    %ax
+0x00008afd:  66 50                    pushw    %ax
 
 ----------------
 IN: 
-0x00008add:  0f a9                    popl     %gs
-0x00008adf:  e8 04 00 00 00           calll    0x8ae8
+0x00008aff:  66 89 c0                 movw     %ax, %ax
+0x00008b02:  8e e8                    movl     %eax, %gs
+0x00008b04:  66 58                    popw     %ax
+0x00008b06:  0f 01 1d cd 82 00 00     lidtl    0x82cd
+0x00008b0d:  e8 04 00 00 00           calll    0x8b16
 
 ----------------
 IN: 
-0x00008ae8:  b8 00 00 00 00           movl     $0, %eax
-0x00008aed:  f7 f8                    idivl    %eax
-0x00008aef:  80 00 00                 addb     $0, (%eax)
-0x00008af2:  00 00                    addb     %al, (%eax)
-0x00008af4:  00 00                    addb     %al, (%eax)
-0x00008af6:  00 00                    addb     %al, (%eax)
-0x00008af8:  00 00                    addb     %al, (%eax)
-0x00008afa:  00 00                    addb     %al, (%eax)
-0x00008afc:  00 00                    addb     %al, (%eax)
-0x00008afe:  00 00                    addb     %al, (%eax)
-0x00008b00:  00 00                    addb     %al, (%eax)
-0x00008b02:  00 00                    addb     %al, (%eax)
-0x00008b04:  00 00                    addb     %al, (%eax)
-0x00008b06:  00 00                    addb     %al, (%eax)
-0x00008b08:  00 00                    addb     %al, (%eax)
-0x00008b0a:  00 00                    addb     %al, (%eax)
-0x00008b0c:  00 00                    addb     %al, (%eax)
-0x00008b0e:  00 00                    addb     %al, (%eax)
-0x00008b10:  00 00                    addb     %al, (%eax)
-0x00008b12:  00 00                    addb     %al, (%eax)
-0x00008b14:  00 00                    addb     %al, (%eax)
-0x00008b16:  00 00                    addb     %al, (%eax)
-0x00008b18:  00 00                    addb     %al, (%eax)
-0x00008b1a:  00 00                    addb     %al, (%eax)
-0x00008b1c:  00 00                    addb     %al, (%eax)
-0x00008b1e:  00 00                    addb     %al, (%eax)
-0x00008b20:  00 00                    addb     %al, (%eax)
-0x00008b22:  00 00                    addb     %al, (%eax)
-0x00008b24:  00 00                    addb     %al, (%eax)
-0x00008b26:  00 00                    addb     %al, (%eax)
-0x00008b28:  00 00                    addb     %al, (%eax)
-0x00008b2a:  00 00                    addb     %al, (%eax)
-0x00008b2c:  00 00                    addb     %al, (%eax)
-0x00008b2e:  00 00                    addb     %al, (%eax)
-0x00008b30:  00 00                    addb     %al, (%eax)
-0x00008b32:  00 00                    addb     %al, (%eax)
-0x00008b34:  00 00                    addb     %al, (%eax)
-0x00008b36:  00 00                    addb     %al, (%eax)
-0x00008b38:  00 00                    addb     %al, (%eax)
-0x00008b3a:  00 00                    addb     %al, (%eax)
-0x00008b3c:  00 00                    addb     %al, (%eax)
-0x00008b3e:  00 00                    addb     %al, (%eax)
-0x00008b40:  00 00                    addb     %al, (%eax)
-0x00008b42:  00 00                    addb     %al, (%eax)
-0x00008b44:  00 00                    addb     %al, (%eax)
-0x00008b46:  00 00                    addb     %al, (%eax)
-0x00008b48:  00 00                    addb     %al, (%eax)
-0x00008b4a:  00 00                    addb     %al, (%eax)
-0x00008b4c:  00 00                    addb     %al, (%eax)
-0x00008b4e:  00 00                    addb     %al, (%eax)
-0x00008b50:  00 00                    addb     %al, (%eax)
-0x00008b52:  00 00                    addb     %al, (%eax)
-0x00008b54:  00 00                    addb     %al, (%eax)
-0x00008b56:  00 00                    addb     %al, (%eax)
-0x00008b58:  00 00                    addb     %al, (%eax)
-0x00008b5a:  00 00                    addb     %al, (%eax)
-0x00008b5c:  00 00                    addb     %al, (%eax)
-0x00008b5e:  00 00                    addb     %al, (%eax)
-0x00008b60:  00 00                    addb     %al, (%eax)
-0x00008b62:  00 00                    addb     %al, (%eax)
-0x00008b64:  00 00                    addb     %al, (%eax)
-0x00008b66:  00 00                    addb     %al, (%eax)
-0x00008b68:  00 00                    addb     %al, (%eax)
-0x00008b6a:  00 00                    addb     %al, (%eax)
-0x00008b6c:  00 00                    addb     %al, (%eax)
-0x00008b6e:  00 00                    addb     %al, (%eax)
-0x00008b70:  00 00                    addb     %al, (%eax)
-0x00008b72:  00 00                    addb     %al, (%eax)
-0x00008b74:  00 00                    addb     %al, (%eax)
-0x00008b76:  00 00                    addb     %al, (%eax)
-0x00008b78:  00 00                    addb     %al, (%eax)
-0x00008b7a:  00 00                    addb     %al, (%eax)
-0x00008b7c:  00 00                    addb     %al, (%eax)
-0x00008b7e:  00 00                    addb     %al, (%eax)
-0x00008b80:  00 00                    addb     %al, (%eax)
-0x00008b82:  00 00                    addb     %al, (%eax)
-0x00008b84:  00 00                    addb     %al, (%eax)
-0x00008b86:  00 00                    addb     %al, (%eax)
-0x00008b88:  00 00                    addb     %al, (%eax)
-0x00008b8a:  00 00                    addb     %al, (%eax)
-0x00008b8c:  00 00                    addb     %al, (%eax)
-0x00008b8e:  00 00                    addb     %al, (%eax)
-0x00008b90:  00 00                    addb     %al, (%eax)
-0x00008b92:  00 00                    addb     %al, (%eax)
-0x00008b94:  00 00                    addb     %al, (%eax)
-0x00008b96:  00 00                    addb     %al, (%eax)
-0x00008b98:  00 00                    addb     %al, (%eax)
-0x00008b9a:  00 00                    addb     %al, (%eax)
-0x00008b9c:  00 00                    addb     %al, (%eax)
-0x00008b9e:  00 00                    addb     %al, (%eax)
-0x00008ba0:  00 00                    addb     %al, (%eax)
-0x00008ba2:  00 00                    addb     %al, (%eax)
-0x00008ba4:  00 00                    addb     %al, (%eax)
-0x00008ba6:  00 00                    addb     %al, (%eax)
-0x00008ba8:  00 00                    addb     %al, (%eax)
-0x00008baa:  00 00                    addb     %al, (%eax)
-0x00008bac:  00 00                    addb     %al, (%eax)
-0x00008bae:  00 00                    addb     %al, (%eax)
-0x00008bb0:  00 00                    addb     %al, (%eax)
-0x00008bb2:  00 00                    addb     %al, (%eax)
-0x00008bb4:  00 00                    addb     %al, (%eax)
-0x00008bb6:  00 00                    addb     %al, (%eax)
-0x00008bb8:  00 00                    addb     %al, (%eax)
-0x00008bba:  00 00                    addb     %al, (%eax)
-0x00008bbc:  00 00                    addb     %al, (%eax)
-0x00008bbe:  00 00                    addb     %al, (%eax)
-0x00008bc0:  00 00                    addb     %al, (%eax)
-0x00008bc2:  00 00                    addb     %al, (%eax)
-0x00008bc4:  00 00                    addb     %al, (%eax)
-0x00008bc6:  00 00                    addb     %al, (%eax)
-0x00008bc8:  00 00                    addb     %al, (%eax)
-0x00008bca:  00 00                    addb     %al, (%eax)
-0x00008bcc:  00 00                    addb     %al, (%eax)
-0x00008bce:  00 00                    addb     %al, (%eax)
-0x00008bd0:  00 00                    addb     %al, (%eax)
-0x00008bd2:  00 00                    addb     %al, (%eax)
-0x00008bd4:  00 00                    addb     %al, (%eax)
-0x00008bd6:  00 00                    addb     %al, (%eax)
-0x00008bd8:  00 00                    addb     %al, (%eax)
-0x00008bda:  00 00                    addb     %al, (%eax)
-0x00008bdc:  00 00                    addb     %al, (%eax)
-0x00008bde:  00 00                    addb     %al, (%eax)
-0x00008be0:  00 00                    addb     %al, (%eax)
-0x00008be2:  00 00                    addb     %al, (%eax)
-0x00008be4:  00 00                    addb     %al, (%eax)
-0x00008be6:  00 00                    addb     %al, (%eax)
-0x00008be8:  00 00                    addb     %al, (%eax)
-0x00008bea:  00 00                    addb     %al, (%eax)
-0x00008bec:  00 00                    addb     %al, (%eax)
-0x00008bee:  00 00                    addb     %al, (%eax)
-0x00008bf0:  00 00                    addb     %al, (%eax)
-0x00008bf2:  00 00                    addb     %al, (%eax)
-0x00008bf4:  00 00                    addb     %al, (%eax)
-0x00008bf6:  00 00                    addb     %al, (%eax)
-0x00008bf8:  00 00                    addb     %al, (%eax)
-0x00008bfa:  00 00                    addb     %al, (%eax)
-0x00008bfc:  00 00                    addb     %al, (%eax)
-0x00008bfe:  00 00                    addb     %al, (%eax)
-0x00008c00:  00 00                    addb     %al, (%eax)
-0x00008c02:  00 00                    addb     %al, (%eax)
-0x00008c04:  00 00                    addb     %al, (%eax)
-0x00008c06:  00 00                    addb     %al, (%eax)
-0x00008c08:  00 00                    addb     %al, (%eax)
-0x00008c0a:  00 00                    addb     %al, (%eax)
-0x00008c0c:  00 00                    addb     %al, (%eax)
-0x00008c0e:  00 00                    addb     %al, (%eax)
-0x00008c10:  00 00                    addb     %al, (%eax)
-0x00008c12:  00 00                    addb     %al, (%eax)
-0x00008c14:  00 00                    addb     %al, (%eax)
-0x00008c16:  00 00                    addb     %al, (%eax)
-0x00008c18:  00 00                    addb     %al, (%eax)
-0x00008c1a:  00 00                    addb     %al, (%eax)
-0x00008c1c:  00 00                    addb     %al, (%eax)
-0x00008c1e:  00 00                    addb     %al, (%eax)
-0x00008c20:  00 00                    addb     %al, (%eax)
-0x00008c22:  00 00                    addb     %al, (%eax)
-0x00008c24:  00 00                    addb     %al, (%eax)
-0x00008c26:  00 00                    addb     %al, (%eax)
-0x00008c28:  00 00                    addb     %al, (%eax)
-0x00008c2a:  00 00                    addb     %al, (%eax)
-0x00008c2c:  00 00                    addb     %al, (%eax)
-0x00008c2e:  00 00                    addb     %al, (%eax)
-0x00008c30:  00 00                    addb     %al, (%eax)
-0x00008c32:  00 00                    addb     %al, (%eax)
-0x00008c34:  00 00                    addb     %al, (%eax)
-0x00008c36:  00 00                    addb     %al, (%eax)
-0x00008c38:  00 00                    addb     %al, (%eax)
-0x00008c3a:  00 00                    addb     %al, (%eax)
-0x00008c3c:  00 00                    addb     %al, (%eax)
-0x00008c3e:  00 00                    addb     %al, (%eax)
-0x00008c40:  00 00                    addb     %al, (%eax)
-0x00008c42:  00 00                    addb     %al, (%eax)
-0x00008c44:  00 00                    addb     %al, (%eax)
-0x00008c46:  00 00                    addb     %al, (%eax)
-0x00008c48:  00 00                    addb     %al, (%eax)
-0x00008c4a:  00 00                    addb     %al, (%eax)
-0x00008c4c:  00 00                    addb     %al, (%eax)
-0x00008c4e:  00 00                    addb     %al, (%eax)
-0x00008c50:  00 00                    addb     %al, (%eax)
-0x00008c52:  00 00                    addb     %al, (%eax)
-0x00008c54:  00 00                    addb     %al, (%eax)
-0x00008c56:  00 00                    addb     %al, (%eax)
-0x00008c58:  00 00                    addb     %al, (%eax)
-0x00008c5a:  00 00                    addb     %al, (%eax)
-0x00008c5c:  00 00                    addb     %al, (%eax)
-0x00008c5e:  00 00                    addb     %al, (%eax)
-0x00008c60:  00 00                    addb     %al, (%eax)
-0x00008c62:  00 00                    addb     %al, (%eax)
-0x00008c64:  00 00                    addb     %al, (%eax)
-0x00008c66:  00 00                    addb     %al, (%eax)
-0x00008c68:  00 00                    addb     %al, (%eax)
-0x00008c6a:  00 00                    addb     %al, (%eax)
-0x00008c6c:  00 00                    addb     %al, (%eax)
-0x00008c6e:  00 00                    addb     %al, (%eax)
-0x00008c70:  00 00                    addb     %al, (%eax)
-0x00008c72:  00 00                    addb     %al, (%eax)
-0x00008c74:  00 00                    addb     %al, (%eax)
-0x00008c76:  00 00                    addb     %al, (%eax)
-0x00008c78:  00 00                    addb     %al, (%eax)
-0x00008c7a:  00 00                    addb     %al, (%eax)
-0x00008c7c:  00 00                    addb     %al, (%eax)
-0x00008c7e:  00 00                    addb     %al, (%eax)
-0x00008c80:  00 00                    addb     %al, (%eax)
-0x00008c82:  00 00                    addb     %al, (%eax)
-0x00008c84:  00 00                    addb     %al, (%eax)
-0x00008c86:  00 00                    addb     %al, (%eax)
-0x00008c88:  00 00                    addb     %al, (%eax)
-0x00008c8a:  00 00                    addb     %al, (%eax)
-0x00008c8c:  00 00                    addb     %al, (%eax)
-0x00008c8e:  00 00                    addb     %al, (%eax)
-0x00008c90:  00 00                    addb     %al, (%eax)
-0x00008c92:  00 00                    addb     %al, (%eax)
-0x00008c94:  00 00                    addb     %al, (%eax)
-0x00008c96:  00 00                    addb     %al, (%eax)
-0x00008c98:  00 00                    addb     %al, (%eax)
-0x00008c9a:  00 00                    addb     %al, (%eax)
-0x00008c9c:  00 00                    addb     %al, (%eax)
-0x00008c9e:  00 00                    addb     %al, (%eax)
-0x00008ca0:  00 00                    addb     %al, (%eax)
-0x00008ca2:  00 00                    addb     %al, (%eax)
-0x00008ca4:  00 00                    addb     %al, (%eax)
-0x00008ca6:  00 00                    addb     %al, (%eax)
-0x00008ca8:  00 00                    addb     %al, (%eax)
-0x00008caa:  00 00                    addb     %al, (%eax)
-0x00008cac:  00 00                    addb     %al, (%eax)
-0x00008cae:  00 00                    addb     %al, (%eax)
-0x00008cb0:  00 00                    addb     %al, (%eax)
-0x00008cb2:  00 00                    addb     %al, (%eax)
-0x00008cb4:  00 00                    addb     %al, (%eax)
-0x00008cb6:  00 00                    addb     %al, (%eax)
-0x00008cb8:  00 00                    addb     %al, (%eax)
-0x00008cba:  00 00                    addb     %al, (%eax)
-0x00008cbc:  00 00                    addb     %al, (%eax)
-0x00008cbe:  00 00                    addb     %al, (%eax)
-0x00008cc0:  00 00                    addb     %al, (%eax)
-0x00008cc2:  00 00                    addb     %al, (%eax)
-0x00008cc4:  00 00                    addb     %al, (%eax)
-0x00008cc6:  00 00                    addb     %al, (%eax)
-0x00008cc8:  00 00                    addb     %al, (%eax)
-0x00008cca:  00 00                    addb     %al, (%eax)
-0x00008ccc:  00 00                    addb     %al, (%eax)
-0x00008cce:  00 00                    addb     %al, (%eax)
-0x00008cd0:  00 00                    addb     %al, (%eax)
-0x00008cd2:  00 00                    addb     %al, (%eax)
-0x00008cd4:  00 00                    addb     %al, (%eax)
-0x00008cd6:  00 00                    addb     %al, (%eax)
-0x00008cd8:  00 00                    addb     %al, (%eax)
-0x00008cda:  00 00                    addb     %al, (%eax)
-0x00008cdc:  00 00                    addb     %al, (%eax)
-0x00008cde:  00 00                    addb     %al, (%eax)
-0x00008ce0:  00 00                    addb     %al, (%eax)
-0x00008ce2:  00 00                    addb     %al, (%eax)
-0x00008ce4:  00 00                    addb     %al, (%eax)
-0x00008ce6:  00 00                    addb     %al, (%eax)
-0x00008ce8:  00 00                    addb     %al, (%eax)
-0x00008cea:  00 00                    addb     %al, (%eax)
-0x00008cec:  00 00                    addb     %al, (%eax)
-0x00008cee:  00 00                    addb     %al, (%eax)
-0x00008cf0:  00 00                    addb     %al, (%eax)
-0x00008cf2:  00 00                    addb     %al, (%eax)
-0x00008cf4:  00 00                    addb     %al, (%eax)
-0x00008cf6:  00 00                    addb     %al, (%eax)
-0x00008cf8:  00 00                    addb     %al, (%eax)
-0x00008cfa:  00 00                    addb     %al, (%eax)
-0x00008cfc:  00 00                    addb     %al, (%eax)
-0x00008cfe:  00 00                    addb     %al, (%eax)
-0x00008d00:  00 00                    addb     %al, (%eax)
-0x00008d02:  00 00                    addb     %al, (%eax)
-0x00008d04:  00 00                    addb     %al, (%eax)
-0x00008d06:  00 00                    addb     %al, (%eax)
-0x00008d08:  00 00                    addb     %al, (%eax)
-0x00008d0a:  00 00                    addb     %al, (%eax)
-0x00008d0c:  00 00                    addb     %al, (%eax)
-0x00008d0e:  00 00                    addb     %al, (%eax)
-0x00008d10:  00 00                    addb     %al, (%eax)
-0x00008d12:  00 00                    addb     %al, (%eax)
-0x00008d14:  00 00                    addb     %al, (%eax)
-0x00008d16:  00 00                    addb     %al, (%eax)
-0x00008d18:  00 00                    addb     %al, (%eax)
-0x00008d1a:  00 00                    addb     %al, (%eax)
-0x00008d1c:  00 00                    addb     %al, (%eax)
-0x00008d1e:  00 00                    addb     %al, (%eax)
-0x00008d20:  00 00                    addb     %al, (%eax)
-0x00008d22:  00 00                    addb     %al, (%eax)
-0x00008d24:  00 00                    addb     %al, (%eax)
-0x00008d26:  00 00                    addb     %al, (%eax)
-0x00008d28:  00 00                    addb     %al, (%eax)
-0x00008d2a:  00 00                    addb     %al, (%eax)
-0x00008d2c:  00 00                    addb     %al, (%eax)
-0x00008d2e:  00 00                    addb     %al, (%eax)
-0x00008d30:  00 00                    addb     %al, (%eax)
-0x00008d32:  00 00                    addb     %al, (%eax)
-0x00008d34:  00 00                    addb     %al, (%eax)
-0x00008d36:  00 00                    addb     %al, (%eax)
-0x00008d38:  00 00                    addb     %al, (%eax)
-0x00008d3a:  00 00                    addb     %al, (%eax)
-0x00008d3c:  00 00                    addb     %al, (%eax)
-0x00008d3e:  00 00                    addb     %al, (%eax)
-0x00008d40:  00 00                    addb     %al, (%eax)
-0x00008d42:  00 00                    addb     %al, (%eax)
-0x00008d44:  00 00                    addb     %al, (%eax)
-0x00008d46:  00 00                    addb     %al, (%eax)
-0x00008d48:  00 00                    addb     %al, (%eax)
-0x00008d4a:  00 00                    addb     %al, (%eax)
-0x00008d4c:  00 00                    addb     %al, (%eax)
-0x00008d4e:  00 00                    addb     %al, (%eax)
-0x00008d50:  00 00                    addb     %al, (%eax)
-0x00008d52:  00 00                    addb     %al, (%eax)
-0x00008d54:  00 00                    addb     %al, (%eax)
-0x00008d56:  00 00                    addb     %al, (%eax)
-0x00008d58:  00 00                    addb     %al, (%eax)
-0x00008d5a:  00 00                    addb     %al, (%eax)
-0x00008d5c:  00 00                    addb     %al, (%eax)
-0x00008d5e:  00 00                    addb     %al, (%eax)
-0x00008d60:  00 00                    addb     %al, (%eax)
-0x00008d62:  00 00                    addb     %al, (%eax)
-0x00008d64:  00 00                    addb     %al, (%eax)
-0x00008d66:  00 00                    addb     %al, (%eax)
-0x00008d68:  00 00                    addb     %al, (%eax)
-0x00008d6a:  00 00                    addb     %al, (%eax)
-0x00008d6c:  00 00                    addb     %al, (%eax)
-0x00008d6e:  00 00                    addb     %al, (%eax)
-0x00008d70:  00 00                    addb     %al, (%eax)
-0x00008d72:  00 00                    addb     %al, (%eax)
-0x00008d74:  00 00                    addb     %al, (%eax)
-0x00008d76:  00 00                    addb     %al, (%eax)
-0x00008d78:  00 00                    addb     %al, (%eax)
-0x00008d7a:  00 00                    addb     %al, (%eax)
-0x00008d7c:  00 00                    addb     %al, (%eax)
-0x00008d7e:  00 00                    addb     %al, (%eax)
-0x00008d80:  00 00                    addb     %al, (%eax)
-0x00008d82:  00 00                    addb     %al, (%eax)
-0x00008d84:  00 00                    addb     %al, (%eax)
-0x00008d86:  00 00                    addb     %al, (%eax)
-0x00008d88:  00 00                    addb     %al, (%eax)
-0x00008d8a:  00 00                    addb     %al, (%eax)
-0x00008d8c:  00 00                    addb     %al, (%eax)
-0x00008d8e:  00 00                    addb     %al, (%eax)
-0x00008d90:  00 00                    addb     %al, (%eax)
-0x00008d92:  00 00                    addb     %al, (%eax)
-0x00008d94:  00 00                    addb     %al, (%eax)
-0x00008d96:  00 00                    addb     %al, (%eax)
-0x00008d98:  00 00                    addb     %al, (%eax)
-0x00008d9a:  00 00                    addb     %al, (%eax)
-0x00008d9c:  00 00                    addb     %al, (%eax)
-0x00008d9e:  00 00                    addb     %al, (%eax)
-0x00008da0:  00 00                    addb     %al, (%eax)
-0x00008da2:  00 00                    addb     %al, (%eax)
-0x00008da4:  00 00                    addb     %al, (%eax)
-0x00008da6:  00 00                    addb     %al, (%eax)
-0x00008da8:  00 00                    addb     %al, (%eax)
-0x00008daa:  00 00                    addb     %al, (%eax)
-0x00008dac:  00 00                    addb     %al, (%eax)
-0x00008dae:  00 00                    addb     %al, (%eax)
-0x00008db0:  00 00                    addb     %al, (%eax)
-0x00008db2:  00 00                    addb     %al, (%eax)
-0x00008db4:  00 00                    addb     %al, (%eax)
-0x00008db6:  00 00                    addb     %al, (%eax)
-0x00008db8:  00 00                    addb     %al, (%eax)
-0x00008dba:  00 00                    addb     %al, (%eax)
-0x00008dbc:  00 00                    addb     %al, (%eax)
-0x00008dbe:  00 00                    addb     %al, (%eax)
-0x00008dc0:  00 00                    addb     %al, (%eax)
-0x00008dc2:  00 00                    addb     %al, (%eax)
-0x00008dc4:  00 00                    addb     %al, (%eax)
-0x00008dc6:  00 00                    addb     %al, (%eax)
-0x00008dc8:  00 00                    addb     %al, (%eax)
-0x00008dca:  00 00                    addb     %al, (%eax)
-0x00008dcc:  00 00                    addb     %al, (%eax)
-0x00008dce:  00 00                    addb     %al, (%eax)
-0x00008dd0:  00 00                    addb     %al, (%eax)
-0x00008dd2:  00 00                    addb     %al, (%eax)
-0x00008dd4:  00 00                    addb     %al, (%eax)
-0x00008dd6:  00 00                    addb     %al, (%eax)
-0x00008dd8:  00 00                    addb     %al, (%eax)
-0x00008dda:  00 00                    addb     %al, (%eax)
-0x00008ddc:  00 00                    addb     %al, (%eax)
-0x00008dde:  00 00                    addb     %al, (%eax)
-0x00008de0:  00 00                    addb     %al, (%eax)
-0x00008de2:  00 00                    addb     %al, (%eax)
-0x00008de4:  00 00                    addb     %al, (%eax)
-0x00008de6:  00 00                    addb     %al, (%eax)
-0x00008de8:  00 00                    addb     %al, (%eax)
-0x00008dea:  00 00                    addb     %al, (%eax)
-0x00008dec:  00 00                    addb     %al, (%eax)
-0x00008dee:  00 00                    addb     %al, (%eax)
-0x00008df0:  00 00                    addb     %al, (%eax)
-0x00008df2:  00 00                    addb     %al, (%eax)
-0x00008df4:  00 00                    addb     %al, (%eax)
-0x00008df6:  00 00                    addb     %al, (%eax)
-0x00008df8:  00 00                    addb     %al, (%eax)
-0x00008dfa:  00 00                    addb     %al, (%eax)
-0x00008dfc:  00 00                    addb     %al, (%eax)
-0x00008dfe:  00 00                    addb     %al, (%eax)
-0x00008e00:  00 00                    addb     %al, (%eax)
-0x00008e02:  00 00                    addb     %al, (%eax)
-0x00008e04:  00 00                    addb     %al, (%eax)
-0x00008e06:  00 00                    addb     %al, (%eax)
-0x00008e08:  00 00                    addb     %al, (%eax)
-0x00008e0a:  00 00                    addb     %al, (%eax)
-0x00008e0c:  00 00                    addb     %al, (%eax)
-0x00008e0e:  00 00                    addb     %al, (%eax)
-0x00008e10:  00 00                    addb     %al, (%eax)
-0x00008e12:  00 00                    addb     %al, (%eax)
-0x00008e14:  00 00                    addb     %al, (%eax)
-0x00008e16:  00 00                    addb     %al, (%eax)
-0x00008e18:  00 00                    addb     %al, (%eax)
-0x00008e1a:  00 00                    addb     %al, (%eax)
-0x00008e1c:  00 00                    addb     %al, (%eax)
-0x00008e1e:  00 00                    addb     %al, (%eax)
-0x00008e20:  00 00                    addb     %al, (%eax)
-0x00008e22:  00 00                    addb     %al, (%eax)
-0x00008e24:  00 00                    addb     %al, (%eax)
-0x00008e26:  00 00                    addb     %al, (%eax)
-0x00008e28:  00 00                    addb     %al, (%eax)
-0x00008e2a:  00 00                    addb     %al, (%eax)
-0x00008e2c:  00 00                    addb     %al, (%eax)
-0x00008e2e:  00 00                    addb     %al, (%eax)
-0x00008e30:  00 00                    addb     %al, (%eax)
-0x00008e32:  00 00                    addb     %al, (%eax)
-0x00008e34:  00 00                    addb     %al, (%eax)
-0x00008e36:  00 00                    addb     %al, (%eax)
-0x00008e38:  00 00                    addb     %al, (%eax)
-0x00008e3a:  00 00                    addb     %al, (%eax)
-0x00008e3c:  00 00                    addb     %al, (%eax)
-0x00008e3e:  00 00                    addb     %al, (%eax)
-0x00008e40:  00 00                    addb     %al, (%eax)
-0x00008e42:  00 00                    addb     %al, (%eax)
-0x00008e44:  00 00                    addb     %al, (%eax)
-0x00008e46:  00 00                    addb     %al, (%eax)
-0x00008e48:  00 00                    addb     %al, (%eax)
-0x00008e4a:  00 00                    addb     %al, (%eax)
-0x00008e4c:  00 00                    addb     %al, (%eax)
-0x00008e4e:  00 00                    addb     %al, (%eax)
-0x00008e50:  00 00                    addb     %al, (%eax)
-0x00008e52:  00 00                    addb     %al, (%eax)
-0x00008e54:  00 00                    addb     %al, (%eax)
-0x00008e56:  00 00                    addb     %al, (%eax)
-0x00008e58:  00 00                    addb     %al, (%eax)
-0x00008e5a:  00 00                    addb     %al, (%eax)
-0x00008e5c:  00 00                    addb     %al, (%eax)
-0x00008e5e:  00 00                    addb     %al, (%eax)
-0x00008e60:  00 00                    addb     %al, (%eax)
-0x00008e62:  00 00                    addb     %al, (%eax)
-0x00008e64:  00 00                    addb     %al, (%eax)
-0x00008e66:  00 00                    addb     %al, (%eax)
-0x00008e68:  00 00                    addb     %al, (%eax)
-0x00008e6a:  00 00                    addb     %al, (%eax)
-0x00008e6c:  00 00                    addb     %al, (%eax)
-0x00008e6e:  00 00                    addb     %al, (%eax)
-0x00008e70:  00 00                    addb     %al, (%eax)
-0x00008e72:  00 00                    addb     %al, (%eax)
-0x00008e74:  00 00                    addb     %al, (%eax)
-0x00008e76:  00 00                    addb     %al, (%eax)
-0x00008e78:  00 00                    addb     %al, (%eax)
-0x00008e7a:  00 00                    addb     %al, (%eax)
-0x00008e7c:  00 00                    addb     %al, (%eax)
-0x00008e7e:  00 00                    addb     %al, (%eax)
-0x00008e80:  00 00                    addb     %al, (%eax)
-0x00008e82:  00 00                    addb     %al, (%eax)
-0x00008e84:  00 00                    addb     %al, (%eax)
-0x00008e86:  00 00                    addb     %al, (%eax)
-0x00008e88:  00 00                    addb     %al, (%eax)
-0x00008e8a:  00 00                    addb     %al, (%eax)
-0x00008e8c:  00 00                    addb     %al, (%eax)
-0x00008e8e:  00 00                    addb     %al, (%eax)
-0x00008e90:  00 00                    addb     %al, (%eax)
-0x00008e92:  00 00                    addb     %al, (%eax)
-0x00008e94:  00 00                    addb     %al, (%eax)
-0x00008e96:  00 00                    addb     %al, (%eax)
-0x00008e98:  00 00                    addb     %al, (%eax)
-0x00008e9a:  00 00                    addb     %al, (%eax)
-0x00008e9c:  00 00                    addb     %al, (%eax)
-0x00008e9e:  00 00                    addb     %al, (%eax)
-0x00008ea0:  00 00                    addb     %al, (%eax)
-0x00008ea2:  00 00                    addb     %al, (%eax)
-0x00008ea4:  00 00                    addb     %al, (%eax)
-0x00008ea6:  00 00                    addb     %al, (%eax)
-0x00008ea8:  00 00                    addb     %al, (%eax)
-0x00008eaa:  00 00                    addb     %al, (%eax)
-0x00008eac:  00 00                    addb     %al, (%eax)
-0x00008eae:  00 00                    addb     %al, (%eax)
-0x00008eb0:  00 00                    addb     %al, (%eax)
-0x00008eb2:  00 00                    addb     %al, (%eax)
-0x00008eb4:  00 00                    addb     %al, (%eax)
-0x00008eb6:  00 00                    addb     %al, (%eax)
-0x00008eb8:  00 00                    addb     %al, (%eax)
-0x00008eba:  00 00                    addb     %al, (%eax)
-0x00008ebc:  00 00                    addb     %al, (%eax)
-0x00008ebe:  00 00                    addb     %al, (%eax)
-0x00008ec0:  00 00                    addb     %al, (%eax)
-0x00008ec2:  00 00                    addb     %al, (%eax)
-0x00008ec4:  00 00                    addb     %al, (%eax)
-0x00008ec6:  00 00                    addb     %al, (%eax)
-0x00008ec8:  00 00                    addb     %al, (%eax)
-0x00008eca:  00 00                    addb     %al, (%eax)
-0x00008ecc:  00 00                    addb     %al, (%eax)
-0x00008ece:  00 00                    addb     %al, (%eax)
-0x00008ed0:  00 00                    addb     %al, (%eax)
-0x00008ed2:  00 00                    addb     %al, (%eax)
-0x00008ed4:  00 00                    addb     %al, (%eax)
+0x00008b16:  b8 00 00 00 00           movl     $0, %eax
+0x00008b1b:  f7 f8                    idivl    %eax
+0x00008b1d:  c3                       retl     
 
 ----------------
 IN: 
-0x000082d9:  8a 25 99 82 00 00        movb     0x8299, %ah
-0x000082df:  be 02 83 00 00           movl     $0x8302, %esi
-0x000082e4:  e8 b1 ff ff ff           calll    0x829a
+0x000082fb:  8a 25 93 82 00 00        movb     0x8293, %ah
+0x00008301:  be 24 83 00 00           movl     $0x8324, %esi
+0x00008306:  e8 89 ff ff ff           calll    0x8294
 
 ----------------
 IN: 
-0x0000829a:  bb 00 80 0b 00           movl     $0xb8000, %ebx
-0x0000829f:  ac                       lodsb    (%esi), %al
-0x000082a0:  3c 00                    cmpb     $0, %al
-0x000082a2:  74 14                    je       0x82b8
+0x00008294:  bb 00 80 0b 00           movl     $0xb8000, %ebx
+0x00008299:  ac                       lodsb    (%esi), %al
+0x0000829a:  3c 00                    cmpb     $0, %al
+0x0000829c:  74 14                    je       0x82b2
 
 ----------------
 IN: 
-0x000082a4:  53                       pushl    %ebx
-0x000082a5:  03 1d 86 82 00 00        addl     0x8286, %ebx
-0x000082ab:  83 05 86 82 00 00 02     addl     $2, 0x8286
-0x000082b2:  66 89 03                 movw     %ax, (%ebx)
-0x000082b5:  5b                       popl     %ebx
-0x000082b6:  eb e7                    jmp      0x829f
+0x0000829e:  53                       pushl    %ebx
+0x0000829f:  03 1d 80 82 00 00        addl     0x8280, %ebx
+0x000082a5:  83 05 80 82 00 00 02     addl     $2, 0x8280
+0x000082ac:  66 89 03                 movw     %ax, (%ebx)
+0x000082af:  5b                       popl     %ebx
+0x000082b0:  eb e7                    jmp      0x8299
 
 ----------------
 IN: 
-0x0000829f:  ac                       lodsb    (%esi), %al
-0x000082a0:  3c 00                    cmpb     $0, %al
-0x000082a2:  74 14                    je       0x82b8
+0x00008299:  ac                       lodsb    (%esi), %al
+0x0000829a:  3c 00                    cmpb     $0, %al
+0x0000829c:  74 14                    je       0x82b2
 
 ----------------
 IN: 
-0x000082b8:  c3                       retl     
+0x000082b2:  c3                       retl     
 
 ----------------
 IN: 
-0x000082e9:  fa                       cli      
-0x000082ea:  f4                       hlt      
+0x0000830b:  fa                       cli      
+0x0000830c:  f4                       hlt      
 
