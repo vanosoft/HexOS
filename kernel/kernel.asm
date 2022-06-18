@@ -59,40 +59,27 @@ GDT: dw 0
 
 p32:
 
-cli                     ; NO more interrupts
-lgdt fword[GDT.pointer] ; Load GDT
-mov eax, cr0            ; Where my CR0?
-or al, 1                ; set lowest bit
-mov cr0,eax             ; apply changes
-jmp GDT.code:pmode     ; jump next
+cli
+lidt fword [IDT.pointer]
+lgdt fword [GDT.pointer]
+mov eax, cr0
+or al, 1
+mov cr0,eax 
+jmp 8:pmode
 
 include "idt.asm"
 
 pmode:
-
-use32
-
-; I also need to set data segment
-
-mov ax, GDT.data
+mov ax, 16
 mov ds, ax
-; stack segment
 mov ss, ax
-; graphic segment
 movs gs, ax
-
-lidt fword [IDT.pointer]
-
-; Call 32-bit kernel
-
 call main
 cli
 hlt
 jmp $-2
 
 main:
-    mov eax, 0
-    idiv eax
     ret
 
 db 128
