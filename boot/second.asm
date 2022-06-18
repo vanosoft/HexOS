@@ -39,13 +39,7 @@ int 13h
 
 jc err0
 
-<<<<<<< Updated upstream
-mov sp, 810h
-movs ds, 8100h
-=======
-mov sp, 0x08100
-cli
->>>>>>> Stashed changes
+mov sp, 8100h
 jmp 0000:8100h
 
 err0:
@@ -70,42 +64,6 @@ cli
 hlt
 jmp $-2
 
-<<<<<<< Updated upstream
-; data zone
-
-msg0 db "HexOS Second-stage Bootloader v2.2.1 by Ivan Chetchasov", newline
-db "LOG: Loading HAT16 filetable", newline, 00h
-
-bsod0:
-db newline
-db newline
-db "             ((((((", newline
-db "           ((::::::(   ERROR OCCURRED", newline
-db "         ((:::::::(    At position:  00007E32h", newline
-db "        (:::::::((", newline
-db "        (::::::(       Reason: cannot load kernel", newline
-db " :::::: (:::::(        Maybe your disk is corrupted", newline
-db " :::::: (:::::(        So try to re-install system", newline
-db " :::::: (:::::(        Or append file 'System/kernel.hex'", newline
-db "        (:::::(        To your disk with other PC", newline
-db "        (:::::(        (be careful, maybe virus killed", newline
-db "        (:::::(        your PC, don`t infect other one!)", newline
-db " :::::: (::::::(    ", newline
-db " :::::: (:::::::((  ", newline
-db " ::::::  ((:::::::( ", newline
-db "           ((::::::(", newline
-db "             ((((((", newline
-db newline
-db "Errcode: 0000000Dh Errname: ERROR_CANNOT_LOAD_KERNEL", newline, 00h
-
-; filler
-
-times 200h*16-1+start-$ db 00h
-
-; magic
-
-db EOF
-=======
 bsod:
 db "Source: second-stage bootloader                                                 "
 db "                                                                                "
@@ -136,4 +94,3 @@ db "                                                                            
 db 128
 
 times 200h*(0Ch-2)-$+$$ db 00h
->>>>>>> Stashed changes

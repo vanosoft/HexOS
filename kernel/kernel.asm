@@ -66,11 +66,7 @@ lgdt fword[GDT.pointer] ; Load GDT
 mov eax, cr0            ; Where my CR0?
 or al, 1                ; set lowest bit
 mov cr0,eax             ; apply changes
-<<<<<<< Updated upstream
-jmp GDT.code:.pmode     ; jump next
-=======
 jmp code_seg:pmode     ; jump next
->>>>>>> Stashed changes
 
 .pmode:
 

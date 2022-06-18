@@ -38,13 +38,7 @@ mov  bx, 7E00h
 movs es, 0000h
 int 13h
 
-<<<<<<< Updated upstream
-mov sp, 7E0h
-movs ds, 7E00h
-=======
-mov bp, 0x07E00
-cli
->>>>>>> Stashed changes
+mov sp, 7E00h
 jmp 0000:7E00h
 
 cli
