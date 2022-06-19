@@ -12,7 +12,14 @@ org 7C00h
 
 jmp boot_entry
 nop
-
+times 4-$+$$ db 0x00
+dw 0x0DEC0
+db 'Local drive                     '
+dd 64
+dd 512
+dd 262144
+dd 13824
+dd 248320
 
 boot_entry:
 

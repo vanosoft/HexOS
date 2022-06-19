@@ -35,35 +35,114 @@ printsz:
     ret
 
 IDT:
-    ; ISRs
-    IRQ ISR._0
-    IRQ ISR._1
-    IRQ ISR._2
-    ; pointer
+    ; exceptions
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ ISR.trap
+    IRQ ISR.trap
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ 0 ; reserved
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ 0 ; reserved
+    IRQ 0 ; reserved
+    IRQ 0 ; reserved
+    IRQ 0 ; reserved
+    IRQ 0 ; reserved
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ ISR.fault
+    IRQ 0 ; reserved
+    IRQ ISR.fault
+    IRQ ISR.fault
+    ; PIC ints (16)
+    IRQ ISR.timer
+    IRQ ISR.ignore
+    IRQ ISR.ignore
+    IRQ ISR.ignore
+    IRQ ISR.ignore
+    IRQ ISR.ignore
+    IRQ ISR.ignore
+    IRQ ISR.ignore
+    IRQ ISR.ignore
+    IRQ ISR.ignore
+    IRQ ISR.ignore
+    IRQ ISR.ignore
+    IRQ ISR.ignore
+    IRQ ISR.ignore
+    IRQ ISR.ignore
+    IRQ ISR.ignore
     .pointer:
         dw @f-IDT-1
         dd IDT
     @@:
 
 ISR:
-    ._0: ; #DE
+    .fault:
+        pushad
+        pushf
+        cli
         mov ah, [color.bsod]
         mov esi, bsod
         call printsz
+        hlt
+        jmp $-1
+        popf
+        popad
+        iretd
+    .trap:
+        pushad
+        pushf
         cli
         hlt
-        iret
-    ._1: ; #DB
+        jmp $-1
+        popf
+        popad
+        iretd
+    .ignore:
+        pushad
+        pushf
         cli
-        hlt
-        iret
-    ._2: ; #NMI
-        mov ah, [color.bsod]
-        mov esi, bsod
-        call printsz
+        popf
+        popad
+        iretd
+    .timer:
+        pushad
+        pushf
         cli
-        hlt
-        iret
+        popf
+        popad
+        iretd
+    .keyboard:
+        pushad
+        pushf
+        cli
+        mov dx, 0x60
+        in byte al, dx
+        mov byte [0xB8000], al
+        mov byte [.keycode], al
+        inc dx
+        in byte al, dx
+        and al, 1
+        out byte dx, al
+        popf
+        popad
+        iretd
+        .keycode db ?
     ;
 
 bsod:

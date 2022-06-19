@@ -11,14 +11,20 @@ org 7E00h
 
 jmp start
 nop
+times 4-$+$$ db 0x00
+dw 0x0DEC0
+namestart:
+db "system/bootsec.hxe", 0x00
+nameend:
+times 229-namestart+nameend db 00h
+dd 0
+dd 6114
+dd EOF-start
+dd 1
+dd 0
+dd 0
+db 11000101b
 
-db "system/bootsec.hex", 0x00
-times 243-$+$$ db 00h
-
-dd 00000000h
-dd 00000000h
-dd 00001000h
-db 10000000b
 
 start:
 use16
@@ -107,6 +113,6 @@ db "                                                                            
 db "                                                                                "
 db "                                                                                ", 0x00
 
-db 128
+EOF:
 
 times 0x01400+$$-$ db 00h

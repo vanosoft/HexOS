@@ -17,22 +17,28 @@ macro movs reg, src {
 }
 
 ; HEADER
-org 0x8100
+org 0x08100
 
 jmp p32
 nop
+times 4-$+$$ db 0x00
+dw 0x0DEC0
+namestart:
+db "system/kernel.hxe", 0x00
+nameend:
+times 229-namestart+nameend db 00h
+dd 0
+dd 0
+dd EOF-start
+dd 1
+dd 0
+dd 0
+db 11000100b
 
-db "system/kernel.hex", 00h
-times 243-$+$$ db 00h
-
-dd 00000000h
-dd 00000000h
-dd 00001000h
-db 10000000b
+start:
 
 ; IMPORTS
 
-include "fs.inc"
 include "str.inc"
 
 ; DATA
@@ -70,18 +76,64 @@ jmp 8:pmode
 include "idt.asm"
 
 pmode:
+;; setup ;;
+; setup segment registers
 mov ax, 16
 mov ds, ax
 mov ss, ax
-movs gs, ax
+mov gs, ax
+mov fs, ax
+mov es, ax
+; init timer chip (100 Hz)
+mov byte al, 0x36
+mov dword edx, 0x43
+out byte dx, al
+mov dword eax, 11930
+mov dword edx, 0x40
+out byte dx, al
+mov byte al, ah
+out byte dx, al
+; setup first PIC
+mov dx, 0x20
+mov al, 0x11
+out byte dx, al
+inc dx
+mov al, 0x20
+out byte dx, al
+mov al, 0x04
+out byte dx, al
+mov al, 0x01
+out byte dx, al
+; setup second PIC
+mov dx, 0xA0
+mov al, 0x11
+out byte dx, al
+inc dx
+mov al, 0x28
+out byte dx, al
+mov al, 0x02
+out byte dx, al
+dec al
+out byte dx, al
+; clear general-purpose registers
+xor eax, eax
+xor ebx, ebx
+xor ecx, ecx
+xor edx, edx
+xor esi, esi
+xor edi, edi
+xor ebp, ebp
+; call kernel main
 call main
 cli
 hlt
 jmp $-2
 
 main:
+    ; mov eax, 0
+    ; idiv eax
     ret
 
-db 128
+EOF:
 
 times 2000h-$+$$ db 00h
