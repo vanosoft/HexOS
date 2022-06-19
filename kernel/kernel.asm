@@ -125,13 +125,13 @@ xor edi, edi
 xor ebp, ebp
 ; call kernel main
 call main
-cli
+;cli
 hlt
 jmp $-2
 
 main:
-    mov eax, 0
-    idiv eax
+    ;mov eax, 0
+    ;idiv eax
     ret
 
 EOF:

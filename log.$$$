@@ -14457,6 +14457,7 @@ IN:
 0x000ec537:  0f b7 d2                 movzwl   %dx, %edx
 0x000ec53a:  e8 90 ff ff ff           calll    0xec4cf
 
+Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000c5676:  2e 8e 1e 78 98           movw     %cs:0x9878, %ds
@@ -19525,6 +19526,7 @@ IN:
 IN: 
 0x000ca26e:  2e f3 a4                 rep movsb %cs:(%si), %es:(%di)
 
+Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000ca271:  f6 06 79 03 07           testb    $7, 0x379
@@ -19802,7 +19804,6 @@ IN:
 0x000fd410:  66 58                    popl     %eax
 0x000fd412:  cf                       iretw    
 
-Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000ca45f:  74 06                    je       0xca467
@@ -22476,50 +22477,13 @@ IN:
 0x00008cda:  31 f6                    xorl     %esi, %esi
 0x00008cdc:  31 ff                    xorl     %edi, %edi
 0x00008cde:  31 ed                    xorl     %ebp, %ebp
-0x00008ce0:  e8 04 00 00 00           calll    0x8ce9
+0x00008ce0:  e8 03 00 00 00           calll    0x8ce8
 
 ----------------
 IN: 
-0x00008ce9:  b8 00 00 00 00           movl     $0, %eax
-0x00008cee:  f7 f8                    idivl    %eax
-0x00008cf0:  c3                       retl     
+0x00008ce8:  c3                       retl     
 
 ----------------
 IN: 
-0x0000846f:  60                       pushal   
-0x00008470:  9c                       pushfl   
-0x00008471:  fa                       cli      
-0x00008472:  8a 25 c1 82 00 00        movb     0x82c1, %ah
-0x00008478:  be b9 84 00 00           movl     $0x84b9, %esi
-0x0000847d:  e8 40 fe ff ff           calll    0x82c2
-
-----------------
-IN: 
-0x000082c2:  bb 00 80 0b 00           movl     $0xb8000, %ebx
-0x000082c7:  ac                       lodsb    (%esi), %al
-0x000082c8:  3c 00                    cmpb     $0, %al
-0x000082ca:  74 14                    je       0x82e0
-
-----------------
-IN: 
-0x000082cc:  53                       pushl    %ebx
-0x000082cd:  03 1d ae 82 00 00        addl     0x82ae, %ebx
-0x000082d3:  83 05 ae 82 00 00 02     addl     $2, 0x82ae
-0x000082da:  66 89 03                 movw     %ax, (%ebx)
-0x000082dd:  5b                       popl     %ebx
-0x000082de:  eb e7                    jmp      0x82c7
-
-----------------
-IN: 
-0x000082c7:  ac                       lodsb    (%esi), %al
-0x000082c8:  3c 00                    cmpb     $0, %al
-0x000082ca:  74 14                    je       0x82e0
-
-----------------
-IN: 
-0x000082e0:  c3                       retl     
-
-----------------
-IN: 
-0x00008482:  f4                       hlt      
+0x00008ce5:  f4                       hlt      
 
