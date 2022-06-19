@@ -11076,6 +11076,7 @@ IN:
 0x000fd36e:  66 58                    popl     %eax
 0x000fd370:  cf                       iretw    
 
+Servicing hardware INT=0x08
 ----------------
 IN: 
 0x07fad931:  83 fd 03                 cmpl     $3, %ebp
@@ -11336,7 +11337,6 @@ IN:
 0x000ee5ee:  8d 44 24 0e              leal     0xe(%esp), %eax
 0x000ee5f2:  e8 88 db ff ff           calll    0xec17f
 
-Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000c0003:  e9 ed 55                 jmp      0xc55f3
@@ -13509,7 +13509,6 @@ IN:
 0x000ec4e7:  b9 48 81 0f 00           movl     $0xf8148, %ecx
 0x000ec4ec:  e9 8e fc ff ff           jmp      0xec17f
 
-Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000fd05a:  cd 10                    int      $0x10
@@ -14822,7 +14821,6 @@ IN:
 0x000c570a:  66 58                    popl     %eax
 0x000c570c:  cf                       iretw    
 
-Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000ec53f:  83 c4 28                 addl     $0x28, %esp
@@ -18879,7 +18877,6 @@ IN:
 IN: 
 0x000ca4f8:  cd 10                    int      $0x10
 
-Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000ca511:  58                       popw     %ax
@@ -19105,6 +19102,7 @@ IN:
 0x000fd241:  66 58                    popl     %eax
 0x000fd243:  cf                       iretw    
 
+Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000ca0e8:  72 56                    jb       0xca140
@@ -19380,7 +19378,6 @@ IN:
 0x07fbee33:  89 70 14                 movl     %esi, 0x14(%eax)
 0x07fbee36:  eb 44                    jmp      0x7fbee7c
 
-Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000ca2ed:  83 c4 0c                 addw     $0xc, %sp
@@ -22283,7 +22280,6 @@ IN:
 0x000ee656:  8d 44 24 0e              leal     0xe(%esp), %eax
 0x000ee65a:  e8 20 db ff ff           calll    0xec17f
 
-Servicing hardware INT=0x08
 ----------------
 IN: 
 0x00007c00:  eb 38                    jmp      0x7c3a
@@ -22346,6 +22342,7 @@ IN:
 0x000fa6ea:  67 66 83 7c 24 08 00     cmpl     $0, 8(%esp)
 0x000fa6f1:  74 17                    je       0xfa70a
 
+Servicing hardware INT=0x08
 ----------------
 IN: 
 0x000fa758:  67 29 6b 0a              subw     %bp, 0xa(%ebx)
@@ -22483,10 +22480,46 @@ IN:
 
 ----------------
 IN: 
-0x00008ce9:  c3                       retl     
+0x00008ce9:  b8 00 00 00 00           movl     $0, %eax
+0x00008cee:  f7 f8                    idivl    %eax
+0x00008cf0:  c3                       retl     
 
 ----------------
 IN: 
-0x00008ce5:  fa                       cli      
-0x00008ce6:  f4                       hlt      
+0x0000846f:  60                       pushal   
+0x00008470:  9c                       pushfl   
+0x00008471:  fa                       cli      
+0x00008472:  8a 25 c1 82 00 00        movb     0x82c1, %ah
+0x00008478:  be b9 84 00 00           movl     $0x84b9, %esi
+0x0000847d:  e8 40 fe ff ff           calll    0x82c2
+
+----------------
+IN: 
+0x000082c2:  bb 00 80 0b 00           movl     $0xb8000, %ebx
+0x000082c7:  ac                       lodsb    (%esi), %al
+0x000082c8:  3c 00                    cmpb     $0, %al
+0x000082ca:  74 14                    je       0x82e0
+
+----------------
+IN: 
+0x000082cc:  53                       pushl    %ebx
+0x000082cd:  03 1d ae 82 00 00        addl     0x82ae, %ebx
+0x000082d3:  83 05 ae 82 00 00 02     addl     $2, 0x82ae
+0x000082da:  66 89 03                 movw     %ax, (%ebx)
+0x000082dd:  5b                       popl     %ebx
+0x000082de:  eb e7                    jmp      0x82c7
+
+----------------
+IN: 
+0x000082c7:  ac                       lodsb    (%esi), %al
+0x000082c8:  3c 00                    cmpb     $0, %al
+0x000082ca:  74 14                    je       0x82e0
+
+----------------
+IN: 
+0x000082e0:  c3                       retl     
+
+----------------
+IN: 
+0x00008482:  f4                       hlt      
 

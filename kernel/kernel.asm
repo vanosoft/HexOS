@@ -130,8 +130,8 @@ hlt
 jmp $-2
 
 main:
-    ; mov eax, 0
-    ; idiv eax
+    mov eax, 0
+    idiv eax
     ret
 
 EOF:
