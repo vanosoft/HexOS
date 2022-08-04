@@ -1,7 +1,0 @@
-filename - asciiz - 243 bytes
-prevheader - dd - 4 bytes
-nextheader - dd - 4 bytes
-filesize   - dd - 4 bytes
-options    - db - 1 byte
-
-EOF = 128
