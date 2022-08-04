@@ -1,7 +1,18 @@
 # HexOS
 
-Operating system creating for easy programming.
-TODO:
-- cool API
-- big functionality
-- C and Node.js
+New OS creating for import-replace and a lot of experience
+
+DONE:
+- nothing :(
+
+TODO1:
+- /efi/boot
+
+TODO2:
+- too many for list here :(
+
+TODO#:
+- /bin/py
+- /bin/fasm
+- /bin/hny
+- /bin/hcc
